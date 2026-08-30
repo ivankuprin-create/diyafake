@@ -12,23 +12,20 @@
     body { background: #eef1f5; display: flex; justify-content: center; }
     #app { max-width: 430px; width: 100%; min-height: 100vh; background: #eef1f5; position: relative; padding-bottom: 70px; }
 
-    /* HEADER */
     .header { background: #1a3d7c; color: white; padding: 20px 20px 12px; display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; z-index: 10; }
     .header .greeting { font-size: 18px; font-weight: 600; }
     .header .greeting span { font-weight: 400; opacity: 0.9; }
     .header .settings-btn { font-size: 22px; cursor: pointer; padding: 0 8px; }
 
-    /* CONTENT AREA */
     .content { display: none; padding: 16px; padding-bottom: 80px; }
     .content.active { display: block; }
 
-    /* TAB BAR */
     .tab-bar { position: fixed; bottom: 0; max-width: 430px; width: 100%; background: white; border-top: 1px solid #e5e8ec; display: flex; justify-content: space-around; padding: 6px 0 12px; z-index: 20; }
     .tab-item { text-align: center; font-size: 10px; color: #6c7a8a; cursor: pointer; flex: 1; }
     .tab-item .tab-icon { font-size: 22px; display: block; margin-bottom: 2px; }
     .tab-item.active { color: #1a3d7c; }
 
-    /* ===== СТРІЧКА (головна) ===== */
+    /* ===== СТРІЧКА ===== */
     .greeting-card { background: linear-gradient(135deg, #1a3d7c, #2a5fa8); border-radius: 16px; padding: 20px; color: white; margin-bottom: 16px; }
     .greeting-card .big { font-size: 24px; font-weight: 700; }
     .greeting-card .sub { font-size: 14px; opacity: 0.8; margin-top: 4px; }
@@ -43,29 +40,32 @@
     .cashback .amount { font-size: 22px; font-weight: 700; color: #1a3d7c; }
     .cashback .label { font-size: 12px; color: #6c7a8a; }
 
-    /* ===== ДОКУМЕНТИ ===== */
-    .doc-card { background: white; border-radius: 16px; padding: 16px; margin-bottom: 16px; box-shadow: 0 2px 8px rgba(0,0,0,0.06); border: 1px solid #eef1f5; }
-    .doc-card .doc-header { display: flex; align-items: center; gap: 12px; margin-bottom: 10px; }
-    .doc-card .doc-header .doc-icon { font-size: 24px; width: 40px; height: 40px; background: #f0f4fe; border-radius: 10px; display: flex; align-items: center; justify-content: center; }
-    .doc-card .doc-header .doc-title { font-size: 16px; font-weight: 600; color: #1a1a1a; }
-    .doc-card .doc-header .doc-sub { font-size: 12px; color: #6c7a8a; }
+    /* ===== ДОКУМЕНТИ — ГОРИЗОНТАЛЬНИЙ СКРОЛ ===== */
+    .documents-scroll { display: flex; gap: 16px; overflow-x: auto; padding: 4px 0 12px; scroll-snap-type: x mandatory; -webkit-overflow-scrolling: touch; }
+    .documents-scroll::-webkit-scrollbar { display: none; }
+    .doc-card { min-width: 85%; scroll-snap-align: start; border-radius: 16px; padding: 20px; color: white; position: relative; flex-shrink: 0; box-shadow: 0 4px 12px rgba(0,0,0,0.15); }
 
-    .doc-card .doc-body { display: flex; gap: 14px; }
-    .doc-card .doc-body .doc-photo { width: 80px; height: 100px; border-radius: 8px; object-fit: cover; border: 1px solid #eef1f5; background: #f8fafc; flex-shrink: 0; }
+    .doc-card .doc-type { font-size: 11px; opacity: 0.7; text-transform: uppercase; letter-spacing: 0.5px; }
+    .doc-card .doc-title { font-size: 18px; font-weight: 700; margin-top: 2px; }
+    .doc-card .doc-number { font-size: 22px; font-weight: 700; letter-spacing: 2px; margin: 6px 0 2px; }
+    .doc-card .doc-label { font-size: 10px; opacity: 0.6; text-transform: uppercase; letter-spacing: 0.3px; }
+
+    .doc-card .doc-body { display: flex; gap: 14px; margin-top: 10px; }
+    .doc-card .doc-body .doc-photo { width: 70px; height: 90px; border-radius: 8px; object-fit: cover; border: 2px solid rgba(255,255,255,0.3); background: rgba(255,255,255,0.1); flex-shrink: 0; }
     .doc-card .doc-body .doc-info { flex: 1; }
-    .doc-card .doc-body .doc-info .doc-number { font-size: 18px; font-weight: 700; color: #1a1a1a; letter-spacing: 1px; }
-    .doc-card .doc-body .doc-info .doc-label { font-size: 11px; color: #6c7a8a; margin-bottom: 2px; }
-    .doc-card .doc-body .doc-info .doc-row { display: flex; gap: 12px; margin-top: 4px; flex-wrap: wrap; }
-    .doc-card .doc-body .doc-info .doc-row .field { flex: 1; min-width: 60px; }
-    .doc-card .doc-body .doc-info .doc-row .field .label { font-size: 10px; color: #6c7a8a; text-transform: uppercase; }
-    .doc-card .doc-body .doc-info .doc-row .field .value { font-size: 14px; font-weight: 500; color: #1a1a1a; }
+    .doc-card .doc-body .doc-info .doc-row { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 2px; }
+    .doc-card .doc-body .doc-info .doc-row .field { flex: 1; min-width: 50px; }
+    .doc-card .doc-body .doc-info .doc-row .field .label { font-size: 9px; opacity: 0.5; text-transform: uppercase; }
+    .doc-card .doc-body .doc-info .doc-row .field .value { font-size: 14px; font-weight: 500; }
 
-    .doc-card .doc-footer { display: flex; justify-content: space-between; align-items: center; margin-top: 12px; padding-top: 10px; border-top: 1px solid #eef1f5; }
-    .doc-card .doc-footer .status { color: #2e7d32; font-size: 13px; font-weight: 500; }
-    .doc-card .doc-footer .date { font-size: 11px; color: #6c7a8a; }
+    .doc-card .doc-status { position: absolute; bottom: 16px; right: 16px; background: rgba(255,255,255,0.15); padding: 4px 12px; border-radius: 12px; font-size: 11px; backdrop-filter: blur(4px); }
+    .doc-card .doc-date { font-size: 10px; opacity: 0.5; margin-top: 14px; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 10px; }
 
-    /* РНОКПП */
-    .doc-card.inn-card .doc-body .doc-info .inn-number { font-size: 28px; font-weight: 700; color: #1a3d7c; letter-spacing: 3px; }
+    .doc-card.passport { background: linear-gradient(135deg, #1a3d7c, #2a5fa8); }
+    .doc-card.inn-card { background: linear-gradient(135deg, #0d2b5c, #1a3d7c); }
+    .doc-card.foreign-card { background: linear-gradient(135deg, #0a4a3a, #1a6b55); }
+
+    .doc-card .inn-number { font-size: 34px; font-weight: 700; letter-spacing: 4px; margin: 4px 0; }
 
     /* ===== ДІЯ.АІ ===== */
     .ai-chat { background: white; border-radius: 16px; padding: 20px; border: 1px solid #eef1f5; }
@@ -90,7 +90,7 @@
     .menu-item .arrow { color: #6c7a8a; }
     .menu-item.danger .label { color: #c62828; }
 
-    /* ===== НАЛАШТУВАННЯ (попап) ===== */
+    /* ===== НАЛАШТУВАННЯ ===== */
     .settings-overlay { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: white; z-index: 999; padding: 40px 24px; overflow-y: auto; display: none; }
     .settings-overlay.active { display: block; }
     .settings-overlay h2 { font-size: 28px; font-weight: 700; margin-bottom: 8px; color: #1a3d7c; }
@@ -104,9 +104,6 @@
     .settings-overlay .btn-danger { background: #ffebee; color: #c62828; }
     .settings-overlay .user-select { margin-bottom: 16px; }
     .settings-overlay .user-select select { width: 100%; padding: 14px; border: 1px solid #dde1e6; border-radius: 12px; font-size: 16px; background: #f8fafc; }
-
-    /* scroll fix */
-    .documents-scroll { max-height: calc(100vh - 200px); overflow-y: auto; }
   </style>
 </head>
 <body>
@@ -118,36 +115,34 @@
     <div class="settings-btn" onclick="openSettings()">⚙️</div>
   </div>
 
-  <!-- CONTENT: Стрічка -->
+  <!-- Стрічка -->
   <div class="content active" id="tab-feed">
     <div class="greeting-card">
-      <div class="big">Привіт, <span id="userNameGreeting">Іван</span> 🥰</div>
+      <div class="big">Привіт, <span id="userNameGreeting">Гість</span> 🥰</div>
       <div class="sub">Тут будуть ваші останні дії</div>
     </div>
-
     <div class="service-grid">
       <div class="service-item"><span class="icon">🏛️</span><div class="label">Незламність</div><div class="desc">Мапа укриттів</div></div>
       <div class="service-item"><span class="icon">📱</span><div class="label">Сканувати QR-код</div><div class="desc">Військові облігації</div></div>
       <div class="service-item"><span class="icon">🚁</span><div class="label">Лінія дронів</div><div class="desc">Змінити хід подій</div></div>
       <div class="service-item"><span class="icon">💰</span><div class="label">Національний кешбек</div><div class="desc">0.00 грн</div></div>
     </div>
-
     <div class="cashback">
       <span class="label">Накопичено кешбеку за грудень</span>
       <span class="amount">0.00 грн</span>
     </div>
   </div>
 
-  <!-- CONTENT: Документи -->
+  <!-- Документи -->
   <div class="content" id="tab-docs">
     <div class="documents-scroll" id="documentsContainer"></div>
   </div>
 
-  <!-- CONTENT: Дія.АІ -->
+  <!-- Дія.АІ -->
   <div class="content" id="tab-ai">
     <div class="ai-chat">
       <div class="message">
-        <div class="name">Привіт, <span id="aiUserName">Іван</span></div>
+        <div class="name">Привіт, <span id="aiUserName">Гість</span></div>
         <div class="text">Ставте запитання — я допоможу розібратись будь з чим.<br>Не знаєте, що спитати? Можете замовити витяг про місце проживання через чат.</div>
       </div>
       <div class="message" style="background: #f8fafc;">
@@ -160,7 +155,7 @@
     </div>
   </div>
 
-  <!-- CONTENT: Сервіси -->
+  <!-- Сервіси -->
   <div class="content" id="tab-services">
     <div style="font-size:20px;font-weight:600;margin-bottom:12px;">Сервіси</div>
     <div style="position:relative;margin-bottom:16px;">
@@ -180,7 +175,7 @@
     </div>
   </div>
 
-  <!-- CONTENT: Меню -->
+  <!-- Меню -->
   <div class="content" id="tab-menu">
     <div style="font-size:14px;color:#6c7a8a;margin-bottom:8px;">Версія Дії: 4.31.2.2402</div>
     <div class="menu-list">
@@ -197,7 +192,7 @@
     </div>
   </div>
 
-  <!-- BOTTOM TAB BAR -->
+  <!-- TAB BAR -->
   <div class="tab-bar" id="tabBar">
     <div class="tab-item active" data-tab="feed"><span class="tab-icon">🏠</span>Стрічка</div>
     <div class="tab-item" data-tab="docs"><span class="tab-icon">📄</span>Документи</div>
@@ -206,27 +201,21 @@
     <div class="tab-item" data-tab="menu"><span class="tab-icon">☰</span>Меню</div>
   </div>
 
-  <!-- SETTINGS OVERLAY -->
+  <!-- SETTINGS -->
   <div class="settings-overlay" id="settingsOverlay">
     <h2>⚙️ Налаштування</h2>
     <p>Додайте або виберіть користувача</p>
-
     <div class="user-select">
       <label style="font-weight:600;">Обрати існуючого:</label>
       <select id="userSelect" onchange="selectUserFromDropdown(this.value)"></select>
     </div>
-
     <hr style="margin:16px 0;border-color:#eef1f5;">
-
     <p><strong>Новий користувач</strong> (заповніть поля)</p>
     <input id="userName" placeholder="ПІБ (прізвище ім'я по батькові)" value="">
-    <input id="userInn" placeholder="РНОКПП (ІНН)" value="">
     <input id="userBirth" placeholder="Дата народження (ДД.ММ.РРРР)" value="">
-    <input id="userPassport" placeholder="Номер паспорта (ID-картки)" value="">
-    <input id="userForeign" placeholder="Номер закордонного паспорта" value="">
     <div class="photo-upload">
-      <label>📸 Паспортне фото (для ID-картки)</label>
-      <input type="file" id="photoPassport" accept="image/*">
+      <label>📸 Фото для документів</label>
+      <input type="file" id="userPhoto" accept="image/*">
     </div>
     <button onclick="saveUser()">Зберегти</button>
     <button class="btn-secondary" onclick="closeSettings()">Закрити</button>
@@ -239,7 +228,18 @@
   let users = JSON.parse(localStorage.getItem('diya_users')) || {};
   let currentUserKey = localStorage.getItem('diya_current') || null;
 
-  // ===== HELPERS =====
+  function generateNumber(prefix, length) {
+    let num = '';
+    for (let i = 0; i < length; i++) num += Math.floor(Math.random() * 10);
+    return prefix + num;
+  }
+
+  function generateInn() {
+    let num = '';
+    for (let i = 0; i < 10; i++) num += Math.floor(Math.random() * 10);
+    return num;
+  }
+
   function saveUsers() {
     localStorage.setItem('diya_users', JSON.stringify(users));
   }
@@ -303,7 +303,6 @@
         select.appendChild(opt);
       });
     }
-    // add empty option for new user?
   }
 
   function selectUserFromDropdown(key) {
@@ -318,30 +317,39 @@
     const container = document.getElementById('documentsContainer');
     const data = getUserData();
     if (!data) {
-      container.innerHTML = `<div style="text-align:center;padding:40px 0;color:#6c7a8a;">Додайте користувача через налаштування</div>`;
+      container.innerHTML = `<div style="min-width:100%;text-align:center;padding:40px 0;color:#6c7a8a;">Додайте користувача через налаштування</div>`;
       return;
     }
     const today = new Date().toLocaleDateString('uk-UA');
-    const photo = data.photoPassport ? `<img src="${data.photoPassport}" class="doc-photo" alt="Фото">` :
-      `<div class="doc-photo" style="display:flex;align-items:center;justify-content:center;color:#aaa;font-size:12px;background:#f8fafc;">Немає фото</div>`;
+    const photo = data.photo ? `<img src="${data.photo}" class="doc-photo" alt="Фото">` :
+      `<div class="doc-photo" style="display:flex;align-items:center;justify-content:center;color:rgba(255,255,255,0.3);font-size:10px;">Фото</div>`;
 
     const nameParts = data.name ? data.name.split(' ') : ['—', '—', '—'];
     const surname = nameParts[0] || '—';
     const name = nameParts[1] || '—';
     const patronymic = nameParts[2] || '—';
 
+    const passportNum = data.passport || generateNumber('0', 9);
+    const innNum = data.inn || generateInn();
+    const foreignNum = data.foreign || generateNumber('FA', 6);
+
+    // save generated numbers back to user data
+    if (!data.passport) data.passport = passportNum;
+    if (!data.inn) data.inn = innNum;
+    if (!data.foreign) data.foreign = foreignNum;
+    users[currentUserKey] = data;
+    saveUsers();
+
     container.innerHTML = `
       <!-- Паспорт -->
-      <div class="doc-card">
-        <div class="doc-header">
-          <div class="doc-icon">🪪</div>
-          <div><div class="doc-title">Паспорт громадянина України</div><div class="doc-sub">ID-картка</div></div>
-        </div>
+      <div class="doc-card passport">
+        <div class="doc-type">ID-картка</div>
+        <div class="doc-title">Паспорт громадянина України</div>
+        <div class="doc-number">${passportNum}</div>
+        <div class="doc-label">Номер документа</div>
         <div class="doc-body">
           ${photo}
           <div class="doc-info">
-            <div class="doc-label">Номер</div>
-            <div class="doc-number">${data.passport || '—'}</div>
             <div class="doc-row">
               <div class="field"><div class="label">Прізвище</div><div class="value">${surname}</div></div>
               <div class="field"><div class="label">Ім'я</div><div class="value">${name}</div></div>
@@ -353,53 +361,44 @@
             </div>
           </div>
         </div>
-        <div class="doc-footer">
-          <span class="status">✅ Дійсний</span>
-          <span class="date">Оновлено ${today}</span>
-        </div>
+        <div class="doc-status">✅ Дійсний</div>
+        <div class="doc-date">Документ оновлено ${today}</div>
       </div>
 
       <!-- РНОКПП -->
       <div class="doc-card inn-card">
-        <div class="doc-header">
-          <div class="doc-icon">📇</div>
-          <div><div class="doc-title">Картка платника податків</div><div class="doc-sub">РНОКПП</div></div>
-        </div>
+        <div class="doc-type">Довідка</div>
+        <div class="doc-title">Картка платника податків</div>
+        <div class="doc-label">РНОКПП</div>
+        <div class="inn-number">${innNum}</div>
         <div class="doc-body">
           <div class="doc-info">
-            <div class="inn-number">${data.inn || '—'}</div>
             <div class="doc-row">
               <div class="field"><div class="label">ПІБ</div><div class="value">${data.name || '—'}</div></div>
               <div class="field"><div class="label">Дата народження</div><div class="value">${data.birth || '—'}</div></div>
             </div>
           </div>
         </div>
-        <div class="doc-footer">
-          <span class="status">✅ Дійсний</span>
-          <span class="date">Оновлено ${today}</span>
-        </div>
+        <div class="doc-status">✅ Дійсний</div>
+        <div class="doc-date">Документ оновлено ${today}</div>
       </div>
 
-      <!-- eДокумент (закордонний) -->
-      <div class="doc-card">
-        <div class="doc-header">
-          <div class="doc-icon">🌍</div>
-          <div><div class="doc-title">Закордонний паспорт</div><div class="doc-sub">e-Документ</div></div>
-        </div>
+      <!-- Закордонний -->
+      <div class="doc-card foreign-card">
+        <div class="doc-type">е-Документ</div>
+        <div class="doc-title">Закордонний паспорт</div>
+        <div class="doc-number">${foreignNum}</div>
+        <div class="doc-label">Номер документа</div>
         <div class="doc-body">
           <div class="doc-info">
-            <div class="doc-label">Номер</div>
-            <div class="doc-number">${data.foreign || '—'}</div>
             <div class="doc-row">
               <div class="field"><div class="label">ПІБ</div><div class="value">${data.name || '—'}</div></div>
               <div class="field"><div class="label">Дата народження</div><div class="value">${data.birth || '—'}</div></div>
             </div>
           </div>
         </div>
-        <div class="doc-footer">
-          <span class="status">✅ Дійсний</span>
-          <span class="date">Оновлено ${today}</span>
-        </div>
+        <div class="doc-status">✅ Дійсний</div>
+        <div class="doc-date">Документ оновлено ${today}</div>
       </div>
     `;
   }
@@ -408,13 +407,9 @@
   function openSettings() {
     document.getElementById('settingsOverlay').classList.add('active');
     renderUserSelect();
-    // Clear form fields
     document.getElementById('userName').value = '';
-    document.getElementById('userInn').value = '';
     document.getElementById('userBirth').value = '';
-    document.getElementById('userPassport').value = '';
-    document.getElementById('userForeign').value = '';
-    document.getElementById('photoPassport').value = '';
+    document.getElementById('userPhoto').value = '';
   }
 
   function closeSettings() {
@@ -423,16 +418,12 @@
 
   function saveUser() {
     const name = document.getElementById('userName').value.trim() || 'Користувач без імені';
-    const inn = document.getElementById('userInn').value.trim() || '—';
     const birth = document.getElementById('userBirth').value.trim() || '—';
-    const passport = document.getElementById('userPassport').value.trim() || '—';
-    const foreign = document.getElementById('userForeign').value.trim() || '—';
-    const key = name + '_' + (inn.slice(-4) || Date.now());
-
-    const file = document.getElementById('photoPassport').files[0];
+    const file = document.getElementById('userPhoto').files[0];
     const photoData = file ? URL.createObjectURL(file) : '';
 
-    users[key] = { name, inn, birth, passport, foreign, photoPassport: photoData };
+    const key = name + '_' + Date.now().toString().slice(-4);
+    users[key] = { name, birth, photo: photoData };
     saveUsers();
     currentUserKey = key;
     localStorage.setItem('diya_current', key);
@@ -460,8 +451,6 @@
   });
 
   // ===== INIT =====
-  // Если нет пользователей, создаём демо-пользователя (для наглядности, но поля пустые)
-  // Но по заданию поля пустые, поэтому не создаём. Показываем гостя.
   renderAll();
 </script>
 </body>
