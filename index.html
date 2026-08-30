@@ -9,13 +9,13 @@
   <title>Дія</title>
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; }
-    body { background: #f0f2f5; display: flex; justify-content: center; }
-    #app { max-width: 430px; width: 100%; min-height: 100vh; background: #f0f2f5; position: relative; padding-bottom: 80px; }
+    body { background: #eef1f5; display: flex; justify-content: center; }
+    #app { max-width: 430px; width: 100%; min-height: 100vh; background: #eef1f5; position: relative; padding-bottom: 80px; }
 
     .header { background: #1a3d7c; color: white; padding: 20px 20px 16px; display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; z-index: 10; }
     .header h1 { font-size: 22px; font-weight: 700; }
     .header .header-right { display: flex; align-items: center; gap: 16px; font-size: 14px; opacity: 0.8; }
-    .header .settings-btn { cursor: pointer; padding: 4px 8px; }
+    .header .settings-btn { cursor: pointer; padding: 4px 8px; background: rgba(255,255,255,0.1); border-radius: 8px; }
 
     .user-card { background: linear-gradient(135deg, #1a3d7c, #2a5fa8); margin: -10px 16px 16px; padding: 20px; border-radius: 16px; color: white; position: relative; }
     .user-card .name { font-size: 20px; font-weight: 700; }
@@ -35,45 +35,50 @@
     .content { padding: 16px; display: none; }
     .content.active { display: block; }
 
-    /* ===== ОРИГІНАЛЬНІ КАРТКИ ДОКУМЕНТІВ ===== */
-    .doc-card { background: linear-gradient(135deg, #1a3d7c, #2a5fa8); border-radius: 16px; padding: 20px; margin-bottom: 16px; color: white; position: relative; overflow: hidden; min-height: 180px; box-shadow: 0 4px 12px rgba(26,61,124,0.3); }
-    .doc-card .doc-type { font-size: 12px; opacity: 0.7; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 4px; }
-    .doc-card .doc-title { font-size: 18px; font-weight: 700; margin-bottom: 2px; }
-    .doc-card .doc-sub { font-size: 13px; opacity: 0.8; margin-bottom: 12px; }
-    .doc-card .doc-number { font-size: 22px; font-weight: 700; letter-spacing: 2px; margin-bottom: 4px; }
-    .doc-card .doc-label { font-size: 11px; opacity: 0.6; text-transform: uppercase; letter-spacing: 0.5px; }
-    .doc-card .doc-row { display: flex; justify-content: space-between; margin-top: 8px; }
-    .doc-card .doc-row .item { flex: 1; }
-    .doc-card .doc-row .item .label { font-size: 10px; opacity: 0.6; text-transform: uppercase; }
-    .doc-card .doc-row .item .value { font-size: 15px; font-weight: 600; }
-    .doc-card .doc-status { position: absolute; bottom: 16px; right: 16px; background: rgba(255,255,255,0.15); padding: 4px 12px; border-radius: 12px; font-size: 11px; backdrop-filter: blur(4px); }
-    .doc-card .doc-photo { width: 70px; height: 90px; border-radius: 8px; border: 2px solid rgba(255,255,255,0.3); object-fit: cover; position: absolute; right: 16px; top: 16px; background: rgba(255,255,255,0.1); }
-    .doc-card .doc-date { font-size: 10px; opacity: 0.5; margin-top: 16px; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 10px; }
+    /* ===== ДОКУМЕНТИ ЯК В ОРИГІНАЛІ ===== */
+    .doc-card { background: white; border-radius: 16px; padding: 16px; margin-bottom: 16px; box-shadow: 0 2px 8px rgba(0,0,0,0.06); border: 1px solid #eef1f5; }
+    .doc-card .doc-header { display: flex; align-items: center; gap: 12px; margin-bottom: 12px; }
+    .doc-card .doc-header .doc-icon { width: 40px; height: 40px; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 20px; color: white; flex-shrink: 0; }
+    .doc-card .doc-header .doc-icon.passport { background: #1a3d7c; }
+    .doc-card .doc-header .doc-icon.inn { background: #0d2b5c; }
+    .doc-card .doc-header .doc-icon.foreign { background: #1a6b55; }
+    .doc-card .doc-header .doc-title { font-size: 16px; font-weight: 600; color: #1a1a1a; }
+    .doc-card .doc-header .doc-sub { font-size: 12px; color: #6c7a8a; }
 
-    /* РНОКПП — особлива картка */
-    .doc-card.inn-card { background: linear-gradient(135deg, #0d2b5c, #1a3d7c); }
-    .doc-card.inn-card .big-number { font-size: 36px; font-weight: 700; letter-spacing: 4px; margin: 8px 0; }
-    .doc-card.inn-card .inn-label { font-size: 11px; opacity: 0.5; text-transform: uppercase; }
+    .doc-card .doc-body { display: flex; gap: 16px; }
+    .doc-card .doc-body .doc-photo { width: 80px; height: 100px; border-radius: 8px; object-fit: cover; border: 1px solid #eef1f5; background: #f8fafc; flex-shrink: 0; }
+    .doc-card .doc-body .doc-info { flex: 1; }
+    .doc-card .doc-body .doc-info .doc-number { font-size: 18px; font-weight: 700; color: #1a1a1a; letter-spacing: 1px; }
+    .doc-card .doc-body .doc-info .doc-label { font-size: 11px; color: #6c7a8a; margin-bottom: 4px; }
+    .doc-card .doc-body .doc-info .doc-row { display: flex; gap: 12px; margin-top: 4px; flex-wrap: wrap; }
+    .doc-card .doc-body .doc-info .doc-row .field { flex: 1; min-width: 60px; }
+    .doc-card .doc-body .doc-info .doc-row .field .label { font-size: 10px; color: #6c7a8a; text-transform: uppercase; }
+    .doc-card .doc-body .doc-info .doc-row .field .value { font-size: 14px; font-weight: 500; color: #1a1a1a; }
 
-    /* Закордонний */
-    .doc-card.foreign-card { background: linear-gradient(135deg, #0a4a3a, #1a6b55); }
+    .doc-card .doc-footer { display: flex; justify-content: space-between; align-items: center; margin-top: 12px; padding-top: 10px; border-top: 1px solid #eef1f5; }
+    .doc-card .doc-footer .status { color: #2e7d32; font-size: 13px; font-weight: 500; }
+    .doc-card .doc-footer .date { font-size: 11px; color: #6c7a8a; }
 
-    /* Placeholder tabs */
+    /* РНОКПП */
+    .doc-card.inn-card .doc-body .doc-info .inn-number { font-size: 28px; font-weight: 700; color: #1a3d7c; letter-spacing: 3px; }
+
+    /* Placeholder */
     .placeholder-tab { text-align: center; padding: 60px 20px; color: #6c7a8a; }
     .placeholder-tab .big-icon { font-size: 64px; margin-bottom: 16px; display: block; }
     .placeholder-tab h3 { font-size: 20px; color: #1a1a1a; margin-bottom: 8px; }
+    .placeholder-tab p { font-size: 14px; }
 
     /* Settings */
     .settings-overlay { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: white; z-index: 999; padding: 40px 24px; overflow-y: auto; }
     .settings-overlay h2 { font-size: 28px; font-weight: 700; margin-bottom: 8px; color: #1a3d7c; }
     .settings-overlay p { color: #6c7a8a; margin-bottom: 16px; }
     .settings-overlay input { width: 100%; padding: 14px; border: 1px solid #dde1e6; border-radius: 12px; font-size: 16px; margin-bottom: 12px; background: #f8fafc; }
+    .settings-overlay input:focus { border-color: #1a3d7c; outline: none; }
     .settings-overlay .photo-upload { margin: 8px 0 16px; }
     .settings-overlay .photo-upload label { font-weight: 600; color: #1a1a1a; display: block; margin-bottom: 4px; font-size: 14px; }
     .settings-overlay .photo-upload input[type="file"] { padding: 8px; background: white; border: 1px dashed #dde1e6; border-radius: 8px; width: 100%; }
-    .settings-overlay button { background: #1a3d7c; color: white; border: none; padding: 16px; border-radius: 12px; font-size: 18px; font-weight: 600; width: 100%; margin-top: 8px; }
+    .settings-overlay button { background: #1a3d7c; color: white; border: none; padding: 16px; border-radius: 12px; font-size: 18px; font-weight: 600; width: 100%; margin-top: 8px; cursor: pointer; }
     .settings-overlay .btn-secondary { background: #e8f5e9; color: #2e7d32; }
-    .settings-overlay .btn-danger { background: #ffebee; color: #c62828; }
     .hidden { display: none !important; }
   </style>
 </head>
@@ -83,18 +88,18 @@
   <!-- Settings -->
   <div id="settingsScreen" class="settings-overlay">
     <h2>🇺🇦 Налаштування</h2>
-    <p>Додайте нового користувача</p>
-    <input id="userName" placeholder="ПІБ" value="Купрін Іван Дмитрович">
-    <input id="userInn" placeholder="РНОКПП" value="3942845950">
-    <input id="userBirth" placeholder="Дата народження" value="13.12.2007">
-    <input id="userPassport" placeholder="Номер паспорта" value="010332772">
-    <input id="userForeign" placeholder="Номер закордонного" value="FA123456">
+    <p>Введіть дані нового користувача</p>
+    <input id="userName" placeholder="ПІБ (прізвище ім'я по батькові)" value="">
+    <input id="userInn" placeholder="РНОКПП (ІНН)" value="">
+    <input id="userBirth" placeholder="Дата народження (ДД.ММ.РРРР)" value="">
+    <input id="userPassport" placeholder="Номер паспорта (ID-картки)" value="">
+    <input id="userForeign" placeholder="Номер закордонного паспорта" value="">
     <div class="photo-upload">
-      <label>📸 Паспортне фото (для паспорта)</label>
+      <label>📸 Паспортне фото (для ID-картки)</label>
       <input type="file" id="photoPassport" accept="image/*">
       <label>📸 Фото РНОКПП</label>
       <input type="file" id="photoInn" accept="image/*">
-      <label>📸 Фото закордонного</label>
+      <label>📸 Фото закордонного паспорта</label>
       <input type="file" id="photoForeign" accept="image/*">
     </div>
     <button onclick="saveUser()">Зберегти</button>
@@ -105,7 +110,7 @@
   <div class="header">
     <h1>Дія</h1>
     <div class="header-right">
-      <span id="headerUser">Купрін Іван</span>
+      <span id="headerUser">Гість</span>
       <span class="settings-btn" onclick="showSettings()">⚙️</span>
     </div>
   </div>
@@ -115,9 +120,9 @@
 
   <!-- User Card -->
   <div class="user-card">
-    <div class="name" id="displayName">Купрін Іван Дмитрович</div>
-    <div class="inn" id="displayInn">РНОКПП: 3942845950</div>
-    <div class="badge">✅ Верифіковано</div>
+    <div class="name" id="displayName">Немає даних</div>
+    <div class="inn" id="displayInn">Додайте користувача через ⚙️</div>
+    <div class="badge">⏳ Не верифіковано</div>
   </div>
 
   <!-- Tabs -->
@@ -156,8 +161,9 @@
     const container = document.getElementById('userSelector');
     let html = '';
     const keys = Object.keys(users);
-    if (keys.length === 0) { html = '<span style="color:#6c7a8a;font-size:14px;">Немає користувачів. Додайте через ⚙️</span>'; }
-    else {
+    if (keys.length === 0) {
+      html = '<span style="color:#6c7a8a;font-size:14px;">Немає користувачів. Додайте через ⚙️</span>';
+    } else {
       keys.forEach(key => {
         const active = key === currentUser ? 'active' : '';
         html += `<button class="profile-chip ${active}" onclick="selectUser('${key}')">${users[key].name || key}</button>`;
@@ -181,6 +187,12 @@
       document.getElementById('headerUser').textContent = short;
       document.getElementById('displayName').textContent = users[currentUser].name;
       document.getElementById('displayInn').textContent = 'РНОКПП: ' + (users[currentUser].inn || '—');
+      document.querySelector('.user-card .badge').textContent = '✅ Верифіковано';
+    } else {
+      document.getElementById('headerUser').textContent = 'Гість';
+      document.getElementById('displayName').textContent = 'Немає даних';
+      document.getElementById('displayInn').textContent = 'Додайте користувача через ⚙️';
+      document.querySelector('.user-card .badge').textContent = '⏳ Не верифіковано';
     }
   }
 
@@ -192,70 +204,95 @@
     }
     const d = users[currentUser];
     const today = new Date().toLocaleDateString('uk-UA');
-    const photoPass = d.photoPassport ? `<img src="${d.photoPassport}" class="doc-photo" alt="Фото">` : '';
+    const photoPass = d.photoPassport ? `<img src="${d.photoPassport}" class="doc-photo" alt="Фото">` : `<div class="doc-photo" style="display:flex;align-items:center;justify-content:center;color:#aaa;font-size:12px;">Немає фото</div>`;
 
     container.innerHTML = `
       <!-- Паспорт -->
       <div class="doc-card">
-        ${photoPass}
-        <div class="doc-type">ID-картка</div>
-        <div class="doc-title">Паспорт громадянина України</div>
-        <div class="doc-number">${d.passport || '—'}</div>
-        <div class="doc-label">Номер документа</div>
-        <div class="doc-row">
-          <div class="item"><div class="label">Прізвище</div><div class="value">${d.name.split(' ')[0] || '—'}</div></div>
-          <div class="item"><div class="label">Ім'я</div><div class="value">${d.name.split(' ')[1] || '—'}</div></div>
-          <div class="item"><div class="label">По батькові</div><div class="value">${d.name.split(' ')[2] || '—'}</div></div>
+        <div class="doc-header">
+          <div class="doc-icon passport">🪪</div>
+          <div><div class="doc-title">Паспорт громадянина України</div><div class="doc-sub">ID-картка</div></div>
         </div>
-        <div class="doc-row">
-          <div class="item"><div class="label">Дата народження</div><div class="value">${d.birth || '—'}</div></div>
-          <div class="item"><div class="label">Стать</div><div class="value">Ч</div></div>
+        <div class="doc-body">
+          ${photoPass}
+          <div class="doc-info">
+            <div class="doc-label">Номер документа</div>
+            <div class="doc-number">${d.passport || '—'}</div>
+            <div class="doc-row">
+              <div class="field"><div class="label">Прізвище</div><div class="value">${d.name.split(' ')[0] || '—'}</div></div>
+              <div class="field"><div class="label">Ім'я</div><div class="value">${d.name.split(' ')[1] || '—'}</div></div>
+              <div class="field"><div class="label">По батькові</div><div class="value">${d.name.split(' ')[2] || '—'}</div></div>
+            </div>
+            <div class="doc-row">
+              <div class="field"><div class="label">Дата народження</div><div class="value">${d.birth || '—'}</div></div>
+              <div class="field"><div class="label">Стать</div><div class="value">Ч</div></div>
+            </div>
+          </div>
         </div>
-        <div class="doc-status">✅ Дійсний</div>
-        <div class="doc-date">Оновлено ${today}</div>
+        <div class="doc-footer">
+          <span class="status">✅ Дійсний</span>
+          <span class="date">Оновлено ${today}</span>
+        </div>
       </div>
 
       <!-- РНОКПП -->
       <div class="doc-card inn-card">
-        <div class="doc-type">Довідка</div>
-        <div class="doc-title">Картка платника податків</div>
-        <div class="inn-label">РНОКПП</div>
-        <div class="big-number">${d.inn || '—'}</div>
-        <div class="doc-row">
-          <div class="item"><div class="label">ПІБ</div><div class="value">${d.name || '—'}</div></div>
-          <div class="item"><div class="label">Дата народження</div><div class="value">${d.birth || '—'}</div></div>
+        <div class="doc-header">
+          <div class="doc-icon inn">📇</div>
+          <div><div class="doc-title">Картка платника податків</div><div class="doc-sub">РНОКПП</div></div>
         </div>
-        <div class="doc-status">✅ Дійсний</div>
-        <div class="doc-date">Оновлено ${today}</div>
+        <div class="doc-body">
+          <div class="doc-info">
+            <div class="inn-number">${d.inn || '—'}</div>
+            <div class="doc-row">
+              <div class="field"><div class="label">ПІБ</div><div class="value">${d.name || '—'}</div></div>
+              <div class="field"><div class="label">Дата народження</div><div class="value">${d.birth || '—'}</div></div>
+            </div>
+          </div>
+        </div>
+        <div class="doc-footer">
+          <span class="status">✅ Дійсний</span>
+          <span class="date">Оновлено ${today}</span>
+        </div>
       </div>
 
       <!-- Закордонний -->
       <div class="doc-card foreign-card">
-        <div class="doc-type">е-Документ</div>
-        <div class="doc-title">Закордонний паспорт</div>
-        <div class="doc-number">${d.foreign || '—'}</div>
-        <div class="doc-label">Номер документа</div>
-        <div class="doc-row">
-          <div class="item"><div class="label">ПІБ</div><div class="value">${d.name || '—'}</div></div>
-          <div class="item"><div class="label">Дата народження</div><div class="value">${d.birth || '—'}</div></div>
+        <div class="doc-header">
+          <div class="doc-icon foreign">🌍</div>
+          <div><div class="doc-title">Закордонний паспорт</div><div class="doc-sub">е-Документ</div></div>
         </div>
-        <div class="doc-status">✅ Дійсний</div>
-        <div class="doc-date">Оновлено ${today}</div>
+        <div class="doc-body">
+          <div class="doc-info">
+            <div class="doc-label">Номер документа</div>
+            <div class="doc-number">${d.foreign || '—'}</div>
+            <div class="doc-row">
+              <div class="field"><div class="label">ПІБ</div><div class="value">${d.name || '—'}</div></div>
+              <div class="field"><div class="label">Дата народження</div><div class="value">${d.birth || '—'}</div></div>
+            </div>
+          </div>
+        </div>
+        <div class="doc-footer">
+          <span class="status">✅ Дійсний</span>
+          <span class="date">Оновлено ${today}</span>
+        </div>
       </div>
     `;
   }
 
   function saveUser() {
-    const name = document.getElementById('userName').value.trim() || 'Користувач';
+    const name = document.getElementById('userName').value.trim() || 'Користувач без імені';
     const inn = document.getElementById('userInn').value.trim() || '—';
     const birth = document.getElementById('userBirth').value.trim() || '—';
     const passport = document.getElementById('userPassport').value.trim() || '—';
     const foreign = document.getElementById('userForeign').value.trim() || '—';
-    const key = name + '_' + inn.slice(-4);
+    const key = name + '_' + (inn.slice(-4) || Date.now());
+    
     const getPhoto = (id) => {
       const file = document.getElementById(id).files[0];
       return file ? URL.createObjectURL(file) : '';
     };
+    
     users[key] = { name, inn, birth, passport, foreign, photoPassport: getPhoto('photoPassport'), photoInn: getPhoto('photoInn'), photoForeign: getPhoto('photoForeign') };
     saveUsers();
     currentUser = key;
@@ -284,7 +321,7 @@
     const keys = Object.keys(users);
     if (keys.length > 0 && !currentUser) { currentUser = keys[0]; localStorage.setItem('diya_current', currentUser); }
     if (currentUser && users[currentUser]) { updateHeader(); renderDocuments(); }
-    else { document.getElementById('displayName').textContent = 'Немає даних'; document.getElementById('displayInn').textContent = 'Додайте користувача через ⚙️'; }
+    else { updateHeader(); }
   }
   init();
 </script>
