@@ -9,112 +9,199 @@
   <title>Дія</title>
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; }
-    body { background: #eef1f5; display: flex; justify-content: center; }
-    #app { max-width: 430px; width: 100%; min-height: 100vh; background: #eef1f5; position: relative; padding-bottom: 70px; }
+    
+    body { 
+      background: #0a1a3a; 
+      display: flex; 
+      justify-content: center; 
+      min-height: 100vh;
+    }
 
-    .header { background: #1a3d7c; color: white; padding: 20px 20px 12px; display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; z-index: 10; }
+    #app { 
+      max-width: 430px; 
+      width: 100%; 
+      min-height: 100vh; 
+      background: linear-gradient(145deg, #0a1a3a, #1a3d7c, #2a5fa8, #1a3d7c);
+      background-size: 400% 400%;
+      animation: gradientShift 8s ease infinite;
+      position: relative; 
+      padding-bottom: 70px; 
+    }
+
+    @keyframes gradientShift {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    .header { 
+      background: rgba(26, 61, 124, 0.85); 
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      color: white; 
+      padding: 20px 20px 12px; 
+      display: flex; 
+      align-items: center; 
+      justify-content: space-between; 
+      position: sticky; 
+      top: 0; 
+      z-index: 10; 
+      border-bottom: 1px solid rgba(255,255,255,0.05);
+    }
     .header .greeting { font-size: 18px; font-weight: 600; }
     .header .greeting span { font-weight: 400; opacity: 0.9; }
     .header .settings-btn { font-size: 22px; cursor: pointer; padding: 0 8px; }
 
-    .content { display: none; padding: 16px; padding-bottom: 80px; }
+    .content { display: none; padding: 16px; padding-bottom: 80px; height: calc(100vh - 130px); overflow-y: auto; }
     .content.active { display: block; }
 
-    .tab-bar { position: fixed; bottom: 0; max-width: 430px; width: 100%; background: white; border-top: 1px solid #e5e8ec; display: flex; justify-content: space-around; padding: 6px 0 12px; z-index: 20; }
+    /* ===== НИЖНЯ ПАНЕЛЬ ===== */
+    .tab-bar { 
+      position: fixed; 
+      bottom: 0; 
+      max-width: 430px; 
+      width: 100%; 
+      background: rgba(255,255,255,0.95); 
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      border-top: 1px solid rgba(0,0,0,0.05); 
+      display: flex; 
+      justify-content: space-around; 
+      padding: 6px 0 12px; 
+      z-index: 20; 
+    }
     .tab-item { text-align: center; font-size: 10px; color: #6c7a8a; cursor: pointer; flex: 1; }
     .tab-item .tab-icon { font-size: 22px; display: block; margin-bottom: 2px; }
     .tab-item.active { color: #1a3d7c; }
 
     /* ===== СТРІЧКА ===== */
-    .greeting-card { background: linear-gradient(135deg, #1a3d7c, #2a5fa8); border-radius: 16px; padding: 20px; color: white; margin-bottom: 16px; }
+    .greeting-card { background: rgba(255,255,255,0.1); backdrop-filter: blur(10px); border-radius: 16px; padding: 20px; color: white; margin-bottom: 16px; border: 1px solid rgba(255,255,255,0.1); }
     .greeting-card .big { font-size: 24px; font-weight: 700; }
     .greeting-card .sub { font-size: 14px; opacity: 0.8; margin-top: 4px; }
 
     .service-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 16px; }
-    .service-item { background: white; border-radius: 12px; padding: 16px 12px; box-shadow: 0 2px 6px rgba(0,0,0,0.04); border: 1px solid #eef1f5; text-align: center; }
+    .service-item { background: rgba(255,255,255,0.1); backdrop-filter: blur(10px); border-radius: 12px; padding: 16px 12px; border: 1px solid rgba(255,255,255,0.05); text-align: center; }
     .service-item .icon { font-size: 28px; display: block; margin-bottom: 6px; }
-    .service-item .label { font-size: 13px; font-weight: 500; color: #1a1a1a; }
-    .service-item .desc { font-size: 11px; color: #6c7a8a; margin-top: 2px; }
+    .service-item .label { font-size: 13px; font-weight: 500; color: white; }
+    .service-item .desc { font-size: 11px; color: rgba(255,255,255,0.6); margin-top: 2px; }
 
-    .cashback { background: white; border-radius: 12px; padding: 16px; border: 1px solid #eef1f5; display: flex; justify-content: space-between; align-items: center; }
-    .cashback .amount { font-size: 22px; font-weight: 700; color: #1a3d7c; }
-    .cashback .label { font-size: 12px; color: #6c7a8a; }
+    .cashback { background: rgba(255,255,255,0.1); backdrop-filter: blur(10px); border-radius: 12px; padding: 16px; border: 1px solid rgba(255,255,255,0.05); display: flex; justify-content: space-between; align-items: center; }
+    .cashback .amount { font-size: 22px; font-weight: 700; color: white; }
+    .cashback .label { font-size: 12px; color: rgba(255,255,255,0.6); }
 
-    /* ===== ДОКУМЕНТИ — ГОРИЗОНТАЛЬНИЙ СКРОЛ ===== */
-    .documents-scroll { display: flex; gap: 16px; overflow-x: auto; padding: 4px 0 12px; scroll-snap-type: x mandatory; -webkit-overflow-scrolling: touch; }
+    /* ===== ДОКУМЕНТИ — ЯК НА СКРІНШОТАХ ===== */
+    .documents-scroll { 
+      display: flex; 
+      gap: 16px; 
+      overflow-x: auto; 
+      padding: 8px 4px 12px; 
+      scroll-snap-type: x mandatory; 
+      -webkit-overflow-scrolling: touch; 
+      height: calc(100vh - 190px);
+      align-items: center;
+    }
     .documents-scroll::-webkit-scrollbar { display: none; }
 
-    /* ОСНОВНОЙ БЛОК ДОКУМЕНТА — фон градиент */
-    .doc-card { min-width: 85%; scroll-snap-align: start; border-radius: 20px; padding: 16px; flex-shrink: 0; 
-      background: linear-gradient(145deg, #1a3d7c, #2a5fa8); box-shadow: 0 8px 24px rgba(0,0,0,0.2);
+    .doc-card { 
+      min-width: 75%; 
+      max-width: 85%;
+      height: 80%;
+      scroll-snap-align: center; 
+      border-radius: 24px; 
+      padding: 16px; 
+      flex-shrink: 0; 
+      background: rgba(255,255,255,0.06);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid rgba(255,255,255,0.08);
+      box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+      display: flex;
+      flex-direction: column;
     }
-    /* Все документы ОДИНАКОВЫЙ фон */
-    .doc-card.passport { background: linear-gradient(145deg, #1a3d7c, #2a5fa8); }
-    .doc-card.inn-card { background: linear-gradient(145deg, #1a3d7c, #2a5fa8); }
-    .doc-card.foreign-card { background: linear-gradient(145deg, #1a3d7c, #2a5fa8); }
 
-    /* ВНУТРЕННИЙ БЛОК — белый полупрозрачный (стекло) */
-    .doc-inner { background: rgba(255,255,255,0.12); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); border-radius: 16px; padding: 16px; border: 1px solid rgba(255,255,255,0.15); }
+    .doc-inner { 
+      background: rgba(255,255,255,0.06); 
+      backdrop-filter: blur(8px); 
+      -webkit-backdrop-filter: blur(8px); 
+      border-radius: 16px; 
+      padding: 16px; 
+      border: 1px solid rgba(255,255,255,0.08);
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
 
-    /* Шапка документа */
     .doc-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 8px; }
-    .doc-header .doc-title { font-size: 14px; font-weight: 600; opacity: 0.9; letter-spacing: 0.3px; }
-    .doc-header .doc-badge { font-size: 10px; opacity: 0.6; text-transform: uppercase; background: rgba(255,255,255,0.1); padding: 2px 10px; border-radius: 12px; }
+    .doc-header .doc-title { font-size: 13px; font-weight: 600; color: rgba(255,255,255,0.9); letter-spacing: 0.3px; }
+    .doc-header .doc-badge { font-size: 9px; opacity: 0.5; text-transform: uppercase; background: rgba(255,255,255,0.1); padding: 2px 10px; border-radius: 12px; color: rgba(255,255,255,0.7); }
 
-    /* Тело документа */
-    .doc-body { display: flex; gap: 14px; align-items: flex-start; }
-    .doc-body .doc-photo { width: 70px; height: 90px; border-radius: 10px; object-fit: cover; border: 2px solid rgba(255,255,255,0.2); background: rgba(255,255,255,0.1); flex-shrink: 0; }
+    .doc-body { display: flex; gap: 12px; align-items: flex-start; flex: 1; }
+    .doc-body .doc-photo { width: 60px; height: 78px; border-radius: 8px; object-fit: cover; border: 2px solid rgba(255,255,255,0.15); background: rgba(255,255,255,0.05); flex-shrink: 0; }
     .doc-body .doc-info { flex: 1; display: flex; flex-direction: column; gap: 2px; }
     .doc-body .doc-info .doc-row { display: flex; justify-content: space-between; align-items: baseline; flex-wrap: wrap; }
-    .doc-body .doc-info .doc-row .label { font-size: 9px; opacity: 0.5; text-transform: uppercase; letter-spacing: 0.3px; }
-    .doc-body .doc-info .doc-row .value { font-size: 15px; font-weight: 600; }
-    .doc-body .doc-info .doc-row .value.number { font-size: 18px; letter-spacing: 1px; }
+    .doc-body .doc-info .doc-row .label { font-size: 8px; opacity: 0.4; text-transform: uppercase; letter-spacing: 0.3px; color: rgba(255,255,255,0.6); }
+    .doc-body .doc-info .doc-row .value { font-size: 14px; font-weight: 600; color: white; }
+    .doc-body .doc-info .doc-row .value.number { font-size: 16px; letter-spacing: 1px; }
 
-    /* Зеленая полоса с датой обновления */
-    .doc-update { background: #2e7d32; border-radius: 20px; padding: 4px 14px; display: inline-block; font-size: 11px; font-weight: 500; margin: 10px 0 4px; color: white; letter-spacing: 0.3px; }
+    .doc-update { background: #2e7d32; border-radius: 20px; padding: 3px 12px; display: inline-block; font-size: 10px; font-weight: 500; color: white; letter-spacing: 0.3px; margin: 8px 0 4px; align-self: flex-start; }
 
-    /* Имя внизу */
-    .doc-name { font-size: 16px; font-weight: 700; margin-top: 2px; }
+    .doc-name { font-size: 15px; font-weight: 700; color: white; margin-top: 2px; }
 
-    /* РНОКПП — без фото, номер большими цифрами */
     .doc-card.inn-card .doc-body .doc-photo { display: none; }
     .doc-card.inn-card .doc-body .doc-info { margin-left: 0; }
-    .doc-card.inn-card .inn-number { font-size: 32px; font-weight: 700; letter-spacing: 4px; text-align: center; margin: 6px 0; }
+    .doc-card.inn-card .inn-number { font-size: 28px; font-weight: 700; letter-spacing: 4px; text-align: center; margin: 6px 0; color: white; }
 
-    /* ===== ДІЯ.АІ ===== */
-    .ai-chat { background: white; border-radius: 16px; padding: 20px; border: 1px solid #eef1f5; }
-    .ai-chat .message { background: #f0f4fe; padding: 14px; border-radius: 12px; margin-bottom: 12px; }
-    .ai-chat .message .name { font-weight: 600; color: #1a3d7c; }
-    .ai-chat .message .text { margin-top: 4px; color: #1a1a1a; }
-    .ai-chat .input-area { display: flex; gap: 10px; margin-top: 12px; }
-    .ai-chat .input-area input { flex: 1; padding: 12px; border: 1px solid #dde1e6; border-radius: 20px; font-size: 14px; background: #f8fafc; }
+    /* Підпис на паспорті */
+    .doc-signature { margin-top: 6px; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 6px; }
+    .doc-signature .sig-label { font-size: 8px; opacity: 0.4; text-transform: uppercase; color: rgba(255,255,255,0.6); }
+    .doc-signature .sig-value { font-size: 14px; font-weight: 400; color: rgba(255,255,255,0.7); font-family: 'Brush Script MT', cursive; }
+
+    /* ===== ІНШІ ВКЛАДКИ ===== */
+    .ai-chat, .services-grid, .menu-list { background: rgba(255,255,255,0.06); backdrop-filter: blur(10px); border-radius: 16px; padding: 20px; border: 1px solid rgba(255,255,255,0.05); }
+    .ai-chat .message { background: rgba(255,255,255,0.06); padding: 14px; border-radius: 12px; margin-bottom: 12px; color: white; }
+    .ai-chat .message .name { font-weight: 600; color: #6ea8fe; }
+    .ai-chat .message .text { margin-top: 4px; color: rgba(255,255,255,0.8); }
+    .ai-chat .input-area input { background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.1); color: white; }
+    .ai-chat .input-area input::placeholder { color: rgba(255,255,255,0.3); }
     .ai-chat .input-area button { background: #1a3d7c; color: white; border: none; padding: 12px 20px; border-radius: 20px; font-weight: 600; }
 
-    /* ===== СЕРВІСИ ===== */
     .services-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-top: 12px; }
-    .service-item-big { background: white; border-radius: 12px; padding: 16px 8px; text-align: center; border: 1px solid #eef1f5; }
+    .service-item-big { background: rgba(255,255,255,0.04); border-radius: 12px; padding: 16px 8px; text-align: center; border: 1px solid rgba(255,255,255,0.05); color: white; }
     .service-item-big .icon { font-size: 32px; display: block; margin-bottom: 6px; }
-    .service-item-big .label { font-size: 13px; font-weight: 500; color: #1a1a1a; }
+    .service-item-big .label { font-size: 13px; font-weight: 500; }
 
-    /* ===== МЕНЮ ===== */
-    .menu-list { background: white; border-radius: 16px; border: 1px solid #eef1f5; overflow: hidden; }
-    .menu-item { padding: 16px 20px; border-bottom: 1px solid #eef1f5; display: flex; justify-content: space-between; align-items: center; cursor: pointer; }
+    .menu-list { padding: 0; overflow: hidden; }
+    .menu-item { padding: 16px 20px; border-bottom: 1px solid rgba(255,255,255,0.05); display: flex; justify-content: space-between; align-items: center; cursor: pointer; color: white; }
     .menu-item:last-child { border-bottom: none; }
-    .menu-item .label { font-size: 15px; color: #1a1a1a; }
-    .menu-item .arrow { color: #6c7a8a; }
-    .menu-item.danger .label { color: #c62828; }
+    .menu-item .label { font-size: 15px; }
+    .menu-item .arrow { color: rgba(255,255,255,0.3); }
+    .menu-item.danger .label { color: #ef5350; }
 
-    /* ===== НАЛАШТУВАННЯ (ЛОГІН) ===== */
-    .settings-overlay { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: white; z-index: 999; padding: 40px 24px; overflow-y: auto; display: none; }
+    .services-grid .service-item-big .label { color: white; }
+
+    /* ===== НАЛАШТУВАННЯ ===== */
+    .settings-overlay { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.85); backdrop-filter: blur(20px); z-index: 999; padding: 40px 24px; overflow-y: auto; display: none; }
     .settings-overlay.active { display: block; }
-    .settings-overlay h2 { font-size: 28px; font-weight: 700; margin-bottom: 8px; color: #1a3d7c; }
-    .settings-overlay p { color: #6c7a8a; margin-bottom: 16px; }
-    .settings-overlay input { width: 100%; padding: 14px; border: 1px solid #dde1e6; border-radius: 12px; font-size: 16px; margin-bottom: 12px; background: #f8fafc; }
+    .settings-overlay h2 { font-size: 28px; font-weight: 700; margin-bottom: 8px; color: white; }
+    .settings-overlay p { color: rgba(255,255,255,0.6); margin-bottom: 16px; }
+    .settings-overlay input { width: 100%; padding: 14px; border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; font-size: 16px; margin-bottom: 12px; background: rgba(255,255,255,0.05); color: white; }
+    .settings-overlay input::placeholder { color: rgba(255,255,255,0.3); }
     .settings-overlay .photo-upload { margin: 8px 0 16px; }
-    .settings-overlay .photo-upload label { font-weight: 600; color: #1a1a1a; display: block; margin-bottom: 4px; font-size: 14px; }
-    .settings-overlay .photo-upload input[type="file"] { padding: 8px; background: white; border: 1px dashed #dde1e6; border-radius: 8px; width: 100%; }
+    .settings-overlay .photo-upload label { font-weight: 600; color: white; display: block; margin-bottom: 4px; font-size: 14px; }
+    .settings-overlay .photo-upload input[type="file"] { padding: 8px; background: rgba(255,255,255,0.05); border: 1px dashed rgba(255,255,255,0.2); border-radius: 8px; width: 100%; color: white; }
     .settings-overlay button { background: #1a3d7c; color: white; border: none; padding: 16px; border-radius: 12px; font-size: 18px; font-weight: 600; width: 100%; margin-top: 8px; cursor: pointer; }
-    .settings-overlay .btn-secondary { background: #e8f5e9; color: #2e7d32; }
+    .settings-overlay .btn-secondary { background: rgba(255,255,255,0.1); color: white; }
+
+    /* Поле для підпису */
+    .signature-area { margin: 12px 0; }
+    .signature-area label { font-weight: 600; color: white; display: block; margin-bottom: 6px; font-size: 14px; }
+    .signature-area canvas { width: 100%; height: 80px; border-radius: 12px; border: 1px solid rgba(255,255,255,0.1); background: rgba(255,255,255,0.05); touch-action: none; }
+    .signature-area .sig-actions { display: flex; gap: 8px; margin-top: 6px; }
+    .signature-area .sig-actions button { padding: 6px 16px; font-size: 12px; border-radius: 8px; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); color: white; cursor: pointer; width: auto; margin-top: 0; }
+
+    /* Стрічка — кольори тексту */
+    .service-item .label, .service-item .desc, .cashback .label, .cashback .amount { color: white; }
+    .cashback .label { color: rgba(255,255,255,0.6); }
   </style>
 </head>
 <body>
@@ -156,7 +243,7 @@
         <div class="name">Привіт, <span id="aiUserName">Гість</span></div>
         <div class="text">Ставте запитання — я допоможу розібратись будь з чим.<br>Не знаєте, що спитати? Можете замовити витяг про місце проживання через чат.</div>
       </div>
-      <div class="message" style="background: #f8fafc;">
+      <div class="message" style="background: rgba(255,255,255,0.03);">
         <div class="text">Чим можу допомогти?</div>
       </div>
       <div class="input-area">
@@ -168,9 +255,10 @@
 
   <!-- Сервіси -->
   <div class="content" id="tab-services">
-    <div style="font-size:20px;font-weight:600;margin-bottom:12px;">Сервіси</div>
+    <div style="font-size:20px;font-weight:600;color:white;margin-bottom:12px;">Сервіси</div>
     <div style="position:relative;margin-bottom:16px;">
-      <input type="text" placeholder="Пошук" style="width:100%;padding:12px 16px;border-radius:20px;border:1px solid #dde1e6;font-size:16px;background:#f8fafc;">
+      <input type="text" placeholder="Пошук" style="width:100%;padding:12px 16px;border-radius:20px;border:1px solid rgba(255,255,255,0.1);font-size:16px;background:rgba(255,255,255,0.05);color:white;">
+
     </div>
     <div class="services-grid">
       <div class="service-item-big"><span class="icon">🪖</span><div class="label">Допомога армії</div></div>
@@ -188,7 +276,7 @@
 
   <!-- Меню -->
   <div class="content" id="tab-menu">
-    <div style="font-size:14px;color:#6c7a8a;margin-bottom:8px;">Версія Дії: 4.31.2.2402</div>
+    <div style="font-size:14px;color:rgba(255,255,255,0.4);margin-bottom:8px;">Версія Дії: 4.31.2.2402</div>
     <div class="menu-list">
       <div class="menu-item"><span class="label">Повідомлення</span><span class="arrow">›</span></div>
       <div class="menu-item"><span class="label">Дія.Підпис</span><span class="arrow">›</span></div>
@@ -212,16 +300,25 @@
     <div class="tab-item" data-tab="menu"><span class="tab-icon">☰</span>Меню</div>
   </div>
 
-  <!-- SETTINGS (ЛОГІН) -->
+  <!-- SETTINGS -->
   <div class="settings-overlay" id="settingsOverlay">
     <h2>🔐 Вхід / Реєстрація</h2>
-    <p>Введіть ім'я та пароль для входу або створення нового профілю</p>
+    <p>Введіть дані для входу або створення нового профілю</p>
     <input id="loginName" placeholder="Ваше ім'я (ПІБ)" value="">
     <input id="loginBirth" placeholder="Дата народження (ДД.ММ.РРРР)" value="">
     <input id="loginPassword" type="password" placeholder="Пароль" value="">
     <input id="loginPassportNum" placeholder="Номер паспорта (залиште порожнім для генерації)" value="">
     <input id="loginInnNum" placeholder="Номер РНОКПП (залиште порожнім для генерації)" value="">
     <input id="loginForeignNum" placeholder="Номер закордонного (залиште порожнім для генерації)" value="">
+    
+    <div class="signature-area">
+      <label>✍️ Підпис на паспорті (намалюйте пальцем)</label>
+      <canvas id="sigCanvas"></canvas>
+      <div class="sig-actions">
+        <button onclick="clearSignature()">Очистити</button>
+      </div>
+    </div>
+
     <div class="photo-upload">
       <label>📸 Ваше фото (для документів)</label>
       <input type="file" id="userPhoto" accept="image/*">
@@ -233,6 +330,88 @@
 </div>
 
 <script>
+  // ===== ПІДПИС =====
+  let signatureData = null;
+  let isDrawing = false;
+  let lastX = 0, lastY = 0;
+
+  function initSignature() {
+    const canvas = document.getElementById('sigCanvas');
+    if (!canvas) return;
+    const ctx = canvas.getContext('2d');
+    const rect = canvas.getBoundingClientRect();
+    canvas.width = rect.width * 2;
+    canvas.height = rect.height * 2;
+    ctx.scale(2, 2);
+    ctx.strokeStyle = 'white';
+    ctx.lineWidth = 2;
+    ctx.lineCap = 'round';
+    ctx.lineJoin = 'round';
+
+    canvas.addEventListener('touchstart', (e) => {
+      e.preventDefault();
+      const touch = e.touches[0];
+      const rect2 = canvas.getBoundingClientRect();
+      isDrawing = true;
+      lastX = touch.clientX - rect2.left;
+      lastY = touch.clientY - rect2.top;
+    }, { passive: false });
+
+    canvas.addEventListener('touchmove', (e) => {
+      e.preventDefault();
+      if (!isDrawing) return;
+      const touch = e.touches[0];
+      const rect2 = canvas.getBoundingClientRect();
+      const x = touch.clientX - rect2.left;
+      const y = touch.clientY - rect2.top;
+      ctx.beginPath();
+      ctx.moveTo(lastX, lastY);
+      ctx.lineTo(x, y);
+      ctx.stroke();
+      lastX = x;
+      lastY = y;
+    }, { passive: false });
+
+    canvas.addEventListener('touchend', (e) => {
+      e.preventDefault();
+      isDrawing = false;
+      signatureData = canvas.toDataURL('image/png');
+    }, { passive: false });
+
+    canvas.addEventListener('mousedown', (e) => {
+      const rect2 = canvas.getBoundingClientRect();
+      isDrawing = true;
+      lastX = e.clientX - rect2.left;
+      lastY = e.clientY - rect2.top;
+    });
+
+    canvas.addEventListener('mousemove', (e) => {
+      if (!isDrawing) return;
+      const rect2 = canvas.getBoundingClientRect();
+      const x = e.clientX - rect2.left;
+      const y = e.clientY - rect2.top;
+      ctx.beginPath();
+      ctx.moveTo(lastX, lastY);
+      ctx.lineTo(x, y);
+      ctx.stroke();
+      lastX = x;
+      lastY = y;
+    });
+
+    canvas.addEventListener('mouseup', () => {
+      isDrawing = false;
+      signatureData = canvas.toDataURL('image/png');
+    });
+  }
+
+  function clearSignature() {
+    const canvas = document.getElementById('sigCanvas');
+    if (!canvas) return;
+    const ctx = canvas.getContext('2d');
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    signatureData = null;
+  }
+
   // ===== DATA =====
   let users = JSON.parse(localStorage.getItem('diya_users')) || {};
   let currentUserKey = localStorage.getItem('diya_current') || null;
@@ -297,7 +476,7 @@
     const container = document.getElementById('documentsContainer');
     const data = getUserData();
     if (!data) {
-      container.innerHTML = `<div style="min-width:100%;text-align:center;padding:40px 0;color:#6c7a8a;">Увійдіть через налаштування</div>`;
+      container.innerHTML = `<div style="min-width:100%;text-align:center;padding:40px 0;color:rgba(255,255,255,0.4);">Увійдіть через налаштування</div>`;
       return;
     }
 
@@ -309,7 +488,7 @@
 
     const today = data.createdAt;
     const photo = data.photo ? `<img src="${data.photo}" class="doc-photo" alt="Фото">` :
-      `<div class="doc-photo" style="display:flex;align-items:center;justify-content:center;color:rgba(255,255,255,0.3);font-size:10px;">Фото</div>`;
+      `<div class="doc-photo" style="display:flex;align-items:center;justify-content:center;color:rgba(255,255,255,0.2);font-size:10px;">Фото</div>`;
 
     const nameParts = data.name ? data.name.split(' ') : ['—', '—', '—'];
     const surname = nameParts[0] || '—';
@@ -325,6 +504,9 @@
     if (!data.foreign) data.foreign = foreignNum;
     users[currentUserKey] = data;
     saveUsers();
+
+    const signatureHtml = data.signature ? 
+      `<div class="doc-signature"><div class="sig-label">Підпис</div><div class="sig-value">${data.signature}</div></div>` : '';
 
     container.innerHTML = `
       <!-- Паспорт -->
@@ -347,6 +529,7 @@
               </div>
             </div>
           </div>
+          ${signatureHtml}
           <div class="doc-update">Документ оновлено ${today}</div>
           <div class="doc-name">${data.name || '—'}</div>
         </div>
@@ -413,6 +596,8 @@
     document.getElementById('loginInnNum').value = '';
     document.getElementById('loginForeignNum').value = '';
     document.getElementById('userPhoto').value = '';
+    clearSignature();
+    setTimeout(initSignature, 100);
   }
 
   function closeSettings() {
@@ -450,7 +635,8 @@
     } else {
       const key = name + '_' + Date.now().toString().slice(-4);
       const createdAt = new Date().toLocaleDateString('uk-UA');
-      users[key] = { name, birth, password, photo: photoData, passport, inn, foreign, createdAt };
+      const signature = signatureData || '';
+      users[key] = { name, birth, password, photo: photoData, passport, inn, foreign, createdAt, signature };
       saveUsers();
       currentUserKey = key;
       localStorage.setItem('diya_current', key);
