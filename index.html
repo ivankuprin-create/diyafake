@@ -66,6 +66,8 @@
     .doc-card.foreign-card { background: linear-gradient(135deg, #0a4a3a, #1a6b55); }
 
     .doc-card .inn-number { font-size: 34px; font-weight: 700; letter-spacing: 4px; margin: 4px 0; }
+    /* У РНОКПП немає фото */
+    .doc-card.inn-card .doc-body .doc-photo { display: none; }
 
     /* ===== ДІЯ.АІ ===== */
     .ai-chat { background: white; border-radius: 16px; padding: 20px; border: 1px solid #eef1f5; }
@@ -90,20 +92,18 @@
     .menu-item .arrow { color: #6c7a8a; }
     .menu-item.danger .label { color: #c62828; }
 
-    /* ===== НАЛАШТУВАННЯ ===== */
+    /* ===== НАЛАШТУВАННЯ (ЛОГІН) ===== */
     .settings-overlay { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: white; z-index: 999; padding: 40px 24px; overflow-y: auto; display: none; }
     .settings-overlay.active { display: block; }
     .settings-overlay h2 { font-size: 28px; font-weight: 700; margin-bottom: 8px; color: #1a3d7c; }
     .settings-overlay p { color: #6c7a8a; margin-bottom: 16px; }
-    .settings-overlay input, .settings-overlay select { width: 100%; padding: 14px; border: 1px solid #dde1e6; border-radius: 12px; font-size: 16px; margin-bottom: 12px; background: #f8fafc; }
+    .settings-overlay input { width: 100%; padding: 14px; border: 1px solid #dde1e6; border-radius: 12px; font-size: 16px; margin-bottom: 12px; background: #f8fafc; }
     .settings-overlay .photo-upload { margin: 8px 0 16px; }
     .settings-overlay .photo-upload label { font-weight: 600; color: #1a1a1a; display: block; margin-bottom: 4px; font-size: 14px; }
     .settings-overlay .photo-upload input[type="file"] { padding: 8px; background: white; border: 1px dashed #dde1e6; border-radius: 8px; width: 100%; }
     .settings-overlay button { background: #1a3d7c; color: white; border: none; padding: 16px; border-radius: 12px; font-size: 18px; font-weight: 600; width: 100%; margin-top: 8px; cursor: pointer; }
     .settings-overlay .btn-secondary { background: #e8f5e9; color: #2e7d32; }
     .settings-overlay .btn-danger { background: #ffebee; color: #c62828; }
-    .settings-overlay .user-select { margin-bottom: 16px; }
-    .settings-overlay .user-select select { width: 100%; padding: 14px; border: 1px solid #dde1e6; border-radius: 12px; font-size: 16px; background: #f8fafc; }
   </style>
 </head>
 <body>
@@ -201,23 +201,17 @@
     <div class="tab-item" data-tab="menu"><span class="tab-icon">☰</span>Меню</div>
   </div>
 
-  <!-- SETTINGS -->
+  <!-- SETTINGS (ЛОГІН) -->
   <div class="settings-overlay" id="settingsOverlay">
-    <h2>⚙️ Налаштування</h2>
-    <p>Додайте або виберіть користувача</p>
-    <div class="user-select">
-      <label style="font-weight:600;">Обрати існуючого:</label>
-      <select id="userSelect" onchange="selectUserFromDropdown(this.value)"></select>
-    </div>
-    <hr style="margin:16px 0;border-color:#eef1f5;">
-    <p><strong>Новий користувач</strong> (заповніть поля)</p>
-    <input id="userName" placeholder="ПІБ (прізвище ім'я по батькові)" value="">
-    <input id="userBirth" placeholder="Дата народження (ДД.ММ.РРРР)" value="">
+    <h2>🔐 Вхід / Реєстрація</h2>
+    <p>Введіть ім'я та пароль для входу або створення нового профілю</p>
+    <input id="loginName" placeholder="Ваше ім'я (ПІБ)" value="">
+    <input id="loginPassword" type="password" placeholder="Пароль" value="">
     <div class="photo-upload">
-      <label>📸 Фото для документів</label>
+      <label>📸 Ваше фото (для документів)</label>
       <input type="file" id="userPhoto" accept="image/*">
     </div>
-    <button onclick="saveUser()">Зберегти</button>
+    <button onclick="login()">Увійти / Створити</button>
     <button class="btn-secondary" onclick="closeSettings()">Закрити</button>
   </div>
 
@@ -263,7 +257,6 @@
 
   // ===== RENDER =====
   function renderAll() {
-    renderUserSelect();
     updateHeader();
     renderDocuments();
     updateAIChat();
@@ -285,39 +278,11 @@
     document.getElementById('aiUserName').textContent = name === 'Гість' ? 'Гість' : getShortName();
   }
 
-  function renderUserSelect() {
-    const select = document.getElementById('userSelect');
-    select.innerHTML = '';
-    const keys = Object.keys(users);
-    if (keys.length === 0) {
-      const opt = document.createElement('option');
-      opt.value = '';
-      opt.textContent = '— немає користувачів —';
-      select.appendChild(opt);
-    } else {
-      keys.forEach(key => {
-        const opt = document.createElement('option');
-        opt.value = key;
-        opt.textContent = users[key].name || key;
-        if (key === currentUserKey) opt.selected = true;
-        select.appendChild(opt);
-      });
-    }
-  }
-
-  function selectUserFromDropdown(key) {
-    if (key && users[key]) {
-      currentUserKey = key;
-      localStorage.setItem('diya_current', key);
-      renderAll();
-    }
-  }
-
   function renderDocuments() {
     const container = document.getElementById('documentsContainer');
     const data = getUserData();
     if (!data) {
-      container.innerHTML = `<div style="min-width:100%;text-align:center;padding:40px 0;color:#6c7a8a;">Додайте користувача через налаштування</div>`;
+      container.innerHTML = `<div style="min-width:100%;text-align:center;padding:40px 0;color:#6c7a8a;">Увійдіть через налаштування</div>`;
       return;
     }
     const today = new Date().toLocaleDateString('uk-UA');
@@ -333,7 +298,6 @@
     const innNum = data.inn || generateInn();
     const foreignNum = data.foreign || generateNumber('FA', 6);
 
-    // save generated numbers back to user data
     if (!data.passport) data.passport = passportNum;
     if (!data.inn) data.inn = innNum;
     if (!data.foreign) data.foreign = foreignNum;
@@ -365,14 +329,14 @@
         <div class="doc-date">Документ оновлено ${today}</div>
       </div>
 
-      <!-- РНОКПП -->
+      <!-- РНОКПП (без фото) -->
       <div class="doc-card inn-card">
         <div class="doc-type">Довідка</div>
         <div class="doc-title">Картка платника податків</div>
         <div class="doc-label">РНОКПП</div>
         <div class="inn-number">${innNum}</div>
         <div class="doc-body">
-          <div class="doc-info">
+          <div class="doc-info" style="margin-left:0;">
             <div class="doc-row">
               <div class="field"><div class="label">ПІБ</div><div class="value">${data.name || '—'}</div></div>
               <div class="field"><div class="label">Дата народження</div><div class="value">${data.birth || '—'}</div></div>
@@ -390,6 +354,7 @@
         <div class="doc-number">${foreignNum}</div>
         <div class="doc-label">Номер документа</div>
         <div class="doc-body">
+          ${photo}
           <div class="doc-info">
             <div class="doc-row">
               <div class="field"><div class="label">ПІБ</div><div class="value">${data.name || '—'}</div></div>
@@ -403,12 +368,11 @@
     `;
   }
 
-  // ===== SETTINGS =====
+  // ===== SETTINGS (ЛОГІН) =====
   function openSettings() {
     document.getElementById('settingsOverlay').classList.add('active');
-    renderUserSelect();
-    document.getElementById('userName').value = '';
-    document.getElementById('userBirth').value = '';
+    document.getElementById('loginName').value = '';
+    document.getElementById('loginPassword').value = '';
     document.getElementById('userPhoto').value = '';
   }
 
@@ -416,19 +380,41 @@
     document.getElementById('settingsOverlay').classList.remove('active');
   }
 
-  function saveUser() {
-    const name = document.getElementById('userName').value.trim() || 'Користувач без імені';
-    const birth = document.getElementById('userBirth').value.trim() || '—';
+  function login() {
+    const name = document.getElementById('loginName').value.trim();
+    const password = document.getElementById('loginPassword').value.trim();
+    if (!name || !password) {
+      alert('Введіть ім\'я та пароль');
+      return;
+    }
     const file = document.getElementById('userPhoto').files[0];
     const photoData = file ? URL.createObjectURL(file) : '';
 
-    const key = name + '_' + Date.now().toString().slice(-4);
-    users[key] = { name, birth, photo: photoData };
-    saveUsers();
-    currentUserKey = key;
-    localStorage.setItem('diya_current', key);
-    closeSettings();
-    renderAll();
+    // Шукаємо користувача за іменем та паролем
+    let foundKey = null;
+    for (const key in users) {
+      if (users[key].name === name && users[key].password === password) {
+        foundKey = key;
+        break;
+      }
+    }
+
+    if (foundKey) {
+      // Вхід існуючого
+      currentUserKey = foundKey;
+      localStorage.setItem('diya_current', foundKey);
+      closeSettings();
+      renderAll();
+    } else {
+      // Створення нового
+      const key = name + '_' + Date.now().toString().slice(-4);
+      users[key] = { name, password, photo: photoData };
+      saveUsers();
+      currentUserKey = key;
+      localStorage.setItem('diya_current', key);
+      closeSettings();
+      renderAll();
+    }
   }
 
   function logout() {
