@@ -10,46 +10,51 @@
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; }
     body { background: #eef1f5; display: flex; justify-content: center; }
-    #app { max-width: 430px; width: 100%; min-height: 100vh; background: #eef1f5; position: relative; padding-bottom: 80px; }
+    #app { max-width: 430px; width: 100%; min-height: 100vh; background: #eef1f5; position: relative; padding-bottom: 70px; }
 
-    .header { background: #1a3d7c; color: white; padding: 20px 20px 16px; display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; z-index: 10; }
-    .header h1 { font-size: 22px; font-weight: 700; }
-    .header .header-right { display: flex; align-items: center; gap: 16px; font-size: 14px; opacity: 0.8; }
-    .header .settings-btn { cursor: pointer; padding: 4px 8px; background: rgba(255,255,255,0.1); border-radius: 8px; }
+    /* HEADER */
+    .header { background: #1a3d7c; color: white; padding: 20px 20px 12px; display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; z-index: 10; }
+    .header .greeting { font-size: 18px; font-weight: 600; }
+    .header .greeting span { font-weight: 400; opacity: 0.9; }
+    .header .settings-btn { font-size: 22px; cursor: pointer; padding: 0 8px; }
 
-    .user-card { background: linear-gradient(135deg, #1a3d7c, #2a5fa8); margin: -10px 16px 16px; padding: 20px; border-radius: 16px; color: white; position: relative; }
-    .user-card .name { font-size: 20px; font-weight: 700; }
-    .user-card .inn { font-size: 14px; opacity: 0.8; margin-top: 4px; }
-    .user-card .badge { display: inline-block; background: rgba(255,255,255,0.2); padding: 4px 12px; border-radius: 20px; font-size: 12px; margin-top: 8px; }
-
-    .profile-selector { background: white; padding: 12px 16px; border-bottom: 1px solid #eef1f5; display: flex; gap: 8px; flex-wrap: wrap; align-items: center; }
-    .profile-chip { background: #f0f4fe; border: none; padding: 6px 16px; border-radius: 20px; font-size: 13px; color: #1a3d7c; cursor: pointer; border: 1px solid transparent; }
-    .profile-chip.active { background: #1a3d7c; color: white; border-color: #1a3d7c; }
-    .profile-chip.add { background: #e8f5e9; color: #2e7d32; border-color: #2e7d32; }
-
-    .tabs { display: flex; background: white; border-bottom: 1px solid #e5e8ec; padding: 0 8px; position: sticky; top: 72px; z-index: 10; }
-    .tab { flex: 1; text-align: center; padding: 12px 0 8px; font-size: 11px; color: #6c7a8a; border-bottom: 3px solid transparent; cursor: pointer; transition: 0.2s; }
-    .tab.active { color: #1a3d7c; border-bottom-color: #1a3d7c; font-weight: 600; }
-    .tab .tab-icon { font-size: 20px; display: block; margin-bottom: 2px; }
-
-    .content { padding: 16px; display: none; }
+    /* CONTENT AREA */
+    .content { display: none; padding: 16px; padding-bottom: 80px; }
     .content.active { display: block; }
 
-    /* ===== ДОКУМЕНТИ ЯК В ОРИГІНАЛІ ===== */
+    /* TAB BAR */
+    .tab-bar { position: fixed; bottom: 0; max-width: 430px; width: 100%; background: white; border-top: 1px solid #e5e8ec; display: flex; justify-content: space-around; padding: 6px 0 12px; z-index: 20; }
+    .tab-item { text-align: center; font-size: 10px; color: #6c7a8a; cursor: pointer; flex: 1; }
+    .tab-item .tab-icon { font-size: 22px; display: block; margin-bottom: 2px; }
+    .tab-item.active { color: #1a3d7c; }
+
+    /* ===== СТРІЧКА (головна) ===== */
+    .greeting-card { background: linear-gradient(135deg, #1a3d7c, #2a5fa8); border-radius: 16px; padding: 20px; color: white; margin-bottom: 16px; }
+    .greeting-card .big { font-size: 24px; font-weight: 700; }
+    .greeting-card .sub { font-size: 14px; opacity: 0.8; margin-top: 4px; }
+
+    .service-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 16px; }
+    .service-item { background: white; border-radius: 12px; padding: 16px 12px; box-shadow: 0 2px 6px rgba(0,0,0,0.04); border: 1px solid #eef1f5; text-align: center; }
+    .service-item .icon { font-size: 28px; display: block; margin-bottom: 6px; }
+    .service-item .label { font-size: 13px; font-weight: 500; color: #1a1a1a; }
+    .service-item .desc { font-size: 11px; color: #6c7a8a; margin-top: 2px; }
+
+    .cashback { background: white; border-radius: 12px; padding: 16px; border: 1px solid #eef1f5; display: flex; justify-content: space-between; align-items: center; }
+    .cashback .amount { font-size: 22px; font-weight: 700; color: #1a3d7c; }
+    .cashback .label { font-size: 12px; color: #6c7a8a; }
+
+    /* ===== ДОКУМЕНТИ ===== */
     .doc-card { background: white; border-radius: 16px; padding: 16px; margin-bottom: 16px; box-shadow: 0 2px 8px rgba(0,0,0,0.06); border: 1px solid #eef1f5; }
-    .doc-card .doc-header { display: flex; align-items: center; gap: 12px; margin-bottom: 12px; }
-    .doc-card .doc-header .doc-icon { width: 40px; height: 40px; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 20px; color: white; flex-shrink: 0; }
-    .doc-card .doc-header .doc-icon.passport { background: #1a3d7c; }
-    .doc-card .doc-header .doc-icon.inn { background: #0d2b5c; }
-    .doc-card .doc-header .doc-icon.foreign { background: #1a6b55; }
+    .doc-card .doc-header { display: flex; align-items: center; gap: 12px; margin-bottom: 10px; }
+    .doc-card .doc-header .doc-icon { font-size: 24px; width: 40px; height: 40px; background: #f0f4fe; border-radius: 10px; display: flex; align-items: center; justify-content: center; }
     .doc-card .doc-header .doc-title { font-size: 16px; font-weight: 600; color: #1a1a1a; }
     .doc-card .doc-header .doc-sub { font-size: 12px; color: #6c7a8a; }
 
-    .doc-card .doc-body { display: flex; gap: 16px; }
+    .doc-card .doc-body { display: flex; gap: 14px; }
     .doc-card .doc-body .doc-photo { width: 80px; height: 100px; border-radius: 8px; object-fit: cover; border: 1px solid #eef1f5; background: #f8fafc; flex-shrink: 0; }
     .doc-card .doc-body .doc-info { flex: 1; }
     .doc-card .doc-body .doc-info .doc-number { font-size: 18px; font-weight: 700; color: #1a1a1a; letter-spacing: 1px; }
-    .doc-card .doc-body .doc-info .doc-label { font-size: 11px; color: #6c7a8a; margin-bottom: 4px; }
+    .doc-card .doc-body .doc-info .doc-label { font-size: 11px; color: #6c7a8a; margin-bottom: 2px; }
     .doc-card .doc-body .doc-info .doc-row { display: flex; gap: 12px; margin-top: 4px; flex-wrap: wrap; }
     .doc-card .doc-body .doc-info .doc-row .field { flex: 1; min-width: 60px; }
     .doc-card .doc-body .doc-info .doc-row .field .label { font-size: 10px; color: #6c7a8a; text-transform: uppercase; }
@@ -62,33 +67,158 @@
     /* РНОКПП */
     .doc-card.inn-card .doc-body .doc-info .inn-number { font-size: 28px; font-weight: 700; color: #1a3d7c; letter-spacing: 3px; }
 
-    /* Placeholder */
-    .placeholder-tab { text-align: center; padding: 60px 20px; color: #6c7a8a; }
-    .placeholder-tab .big-icon { font-size: 64px; margin-bottom: 16px; display: block; }
-    .placeholder-tab h3 { font-size: 20px; color: #1a1a1a; margin-bottom: 8px; }
-    .placeholder-tab p { font-size: 14px; }
+    /* ===== ДІЯ.АІ ===== */
+    .ai-chat { background: white; border-radius: 16px; padding: 20px; border: 1px solid #eef1f5; }
+    .ai-chat .message { background: #f0f4fe; padding: 14px; border-radius: 12px; margin-bottom: 12px; }
+    .ai-chat .message .name { font-weight: 600; color: #1a3d7c; }
+    .ai-chat .message .text { margin-top: 4px; color: #1a1a1a; }
+    .ai-chat .input-area { display: flex; gap: 10px; margin-top: 12px; }
+    .ai-chat .input-area input { flex: 1; padding: 12px; border: 1px solid #dde1e6; border-radius: 20px; font-size: 14px; background: #f8fafc; }
+    .ai-chat .input-area button { background: #1a3d7c; color: white; border: none; padding: 12px 20px; border-radius: 20px; font-weight: 600; }
 
-    /* Settings */
-    .settings-overlay { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: white; z-index: 999; padding: 40px 24px; overflow-y: auto; }
+    /* ===== СЕРВІСИ ===== */
+    .services-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-top: 12px; }
+    .service-item-big { background: white; border-radius: 12px; padding: 16px 8px; text-align: center; border: 1px solid #eef1f5; }
+    .service-item-big .icon { font-size: 32px; display: block; margin-bottom: 6px; }
+    .service-item-big .label { font-size: 13px; font-weight: 500; color: #1a1a1a; }
+
+    /* ===== МЕНЮ ===== */
+    .menu-list { background: white; border-radius: 16px; border: 1px solid #eef1f5; overflow: hidden; }
+    .menu-item { padding: 16px 20px; border-bottom: 1px solid #eef1f5; display: flex; justify-content: space-between; align-items: center; cursor: pointer; }
+    .menu-item:last-child { border-bottom: none; }
+    .menu-item .label { font-size: 15px; color: #1a1a1a; }
+    .menu-item .arrow { color: #6c7a8a; }
+    .menu-item.danger .label { color: #c62828; }
+
+    /* ===== НАЛАШТУВАННЯ (попап) ===== */
+    .settings-overlay { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: white; z-index: 999; padding: 40px 24px; overflow-y: auto; display: none; }
+    .settings-overlay.active { display: block; }
     .settings-overlay h2 { font-size: 28px; font-weight: 700; margin-bottom: 8px; color: #1a3d7c; }
     .settings-overlay p { color: #6c7a8a; margin-bottom: 16px; }
-    .settings-overlay input { width: 100%; padding: 14px; border: 1px solid #dde1e6; border-radius: 12px; font-size: 16px; margin-bottom: 12px; background: #f8fafc; }
-    .settings-overlay input:focus { border-color: #1a3d7c; outline: none; }
+    .settings-overlay input, .settings-overlay select { width: 100%; padding: 14px; border: 1px solid #dde1e6; border-radius: 12px; font-size: 16px; margin-bottom: 12px; background: #f8fafc; }
     .settings-overlay .photo-upload { margin: 8px 0 16px; }
     .settings-overlay .photo-upload label { font-weight: 600; color: #1a1a1a; display: block; margin-bottom: 4px; font-size: 14px; }
     .settings-overlay .photo-upload input[type="file"] { padding: 8px; background: white; border: 1px dashed #dde1e6; border-radius: 8px; width: 100%; }
     .settings-overlay button { background: #1a3d7c; color: white; border: none; padding: 16px; border-radius: 12px; font-size: 18px; font-weight: 600; width: 100%; margin-top: 8px; cursor: pointer; }
     .settings-overlay .btn-secondary { background: #e8f5e9; color: #2e7d32; }
-    .hidden { display: none !important; }
+    .settings-overlay .btn-danger { background: #ffebee; color: #c62828; }
+    .settings-overlay .user-select { margin-bottom: 16px; }
+    .settings-overlay .user-select select { width: 100%; padding: 14px; border: 1px solid #dde1e6; border-radius: 12px; font-size: 16px; background: #f8fafc; }
+
+    /* scroll fix */
+    .documents-scroll { max-height: calc(100vh - 200px); overflow-y: auto; }
   </style>
 </head>
 <body>
 <div id="app">
 
-  <!-- Settings -->
-  <div id="settingsScreen" class="settings-overlay">
-    <h2>🇺🇦 Налаштування</h2>
-    <p>Введіть дані нового користувача</p>
+  <!-- HEADER -->
+  <div class="header">
+    <div class="greeting">Привіт, <span id="userNameHeader">Гість</span> 🥰</div>
+    <div class="settings-btn" onclick="openSettings()">⚙️</div>
+  </div>
+
+  <!-- CONTENT: Стрічка -->
+  <div class="content active" id="tab-feed">
+    <div class="greeting-card">
+      <div class="big">Привіт, <span id="userNameGreeting">Іван</span> 🥰</div>
+      <div class="sub">Тут будуть ваші останні дії</div>
+    </div>
+
+    <div class="service-grid">
+      <div class="service-item"><span class="icon">🏛️</span><div class="label">Незламність</div><div class="desc">Мапа укриттів</div></div>
+      <div class="service-item"><span class="icon">📱</span><div class="label">Сканувати QR-код</div><div class="desc">Військові облігації</div></div>
+      <div class="service-item"><span class="icon">🚁</span><div class="label">Лінія дронів</div><div class="desc">Змінити хід подій</div></div>
+      <div class="service-item"><span class="icon">💰</span><div class="label">Національний кешбек</div><div class="desc">0.00 грн</div></div>
+    </div>
+
+    <div class="cashback">
+      <span class="label">Накопичено кешбеку за грудень</span>
+      <span class="amount">0.00 грн</span>
+    </div>
+  </div>
+
+  <!-- CONTENT: Документи -->
+  <div class="content" id="tab-docs">
+    <div class="documents-scroll" id="documentsContainer"></div>
+  </div>
+
+  <!-- CONTENT: Дія.АІ -->
+  <div class="content" id="tab-ai">
+    <div class="ai-chat">
+      <div class="message">
+        <div class="name">Привіт, <span id="aiUserName">Іван</span></div>
+        <div class="text">Ставте запитання — я допоможу розібратись будь з чим.<br>Не знаєте, що спитати? Можете замовити витяг про місце проживання через чат.</div>
+      </div>
+      <div class="message" style="background: #f8fafc;">
+        <div class="text">Чим можу допомогти?</div>
+      </div>
+      <div class="input-area">
+        <input type="text" placeholder="Напишіть повідомлення...">
+        <button>➤</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- CONTENT: Сервіси -->
+  <div class="content" id="tab-services">
+    <div style="font-size:20px;font-weight:600;margin-bottom:12px;">Сервіси</div>
+    <div style="position:relative;margin-bottom:16px;">
+      <input type="text" placeholder="Пошук" style="width:100%;padding:12px 16px;border-radius:20px;border:1px solid #dde1e6;font-size:16px;background:#f8fafc;">
+    </div>
+    <div class="services-grid">
+      <div class="service-item-big"><span class="icon">🪖</span><div class="label">Допомога армії</div></div>
+      <div class="service-item-big"><span class="icon">🏛️</span><div class="label">Незламність</div></div>
+      <div class="service-item-big"><span class="icon">💳</span><div class="label">Дія.Картка</div></div>
+      <div class="service-item-big"><span class="icon">📈</span><div class="label">Військові облігації</div></div>
+      <div class="service-item-big"><span class="icon">🚁</span><div class="label">Лінія дронів</div></div>
+      <div class="service-item-big"><span class="icon">💰</span><div class="label">Національний кешбек</div></div>
+      <div class="service-item-big"><span class="icon">🤖</span><div class="label">Чатбот єВорог</div></div>
+      <div class="service-item-big"><span class="icon">🏗️</span><div class="label">Відновлення</div></div>
+      <div class="service-item-big"><span class="icon">🌍</span><div class="label">Міжнародний реєстр збитків</div></div>
+      <div class="service-item-big"><span class="icon">🏅</span><div class="label">Ветеранський спорт</div></div>
+    </div>
+  </div>
+
+  <!-- CONTENT: Меню -->
+  <div class="content" id="tab-menu">
+    <div style="font-size:14px;color:#6c7a8a;margin-bottom:8px;">Версія Дії: 4.31.2.2402</div>
+    <div class="menu-list">
+      <div class="menu-item"><span class="label">Повідомлення</span><span class="arrow">›</span></div>
+      <div class="menu-item"><span class="label">Дія.Підпис</span><span class="arrow">›</span></div>
+      <div class="menu-item"><span class="label">Історія підписань</span><span class="arrow">›</span></div>
+      <div class="menu-item" onclick="openSettings()"><span class="label">Налаштування</span><span class="arrow">›</span></div>
+      <div class="menu-item"><span class="label">Оновити застосунок</span><span class="arrow">›</span></div>
+      <div class="menu-item"><span class="label">Підключені пристрої</span><span class="arrow">›</span></div>
+      <div class="menu-item"><span class="label">Служба підтримки</span><span class="arrow">›</span></div>
+      <div class="menu-item"><span class="label">Копіювати номер пристрою</span><span class="arrow">›</span></div>
+      <div class="menu-item"><span class="label">Питання та відповіді</span><span class="arrow">›</span></div>
+      <div class="menu-item danger" onclick="logout()"><span class="label">Вийти</span><span class="arrow">›</span></div>
+    </div>
+  </div>
+
+  <!-- BOTTOM TAB BAR -->
+  <div class="tab-bar" id="tabBar">
+    <div class="tab-item active" data-tab="feed"><span class="tab-icon">🏠</span>Стрічка</div>
+    <div class="tab-item" data-tab="docs"><span class="tab-icon">📄</span>Документи</div>
+    <div class="tab-item" data-tab="ai"><span class="tab-icon">🤖</span>Дія.АІ</div>
+    <div class="tab-item" data-tab="services"><span class="tab-icon">🛠️</span>Сервіси</div>
+    <div class="tab-item" data-tab="menu"><span class="tab-icon">☰</span>Меню</div>
+  </div>
+
+  <!-- SETTINGS OVERLAY -->
+  <div class="settings-overlay" id="settingsOverlay">
+    <h2>⚙️ Налаштування</h2>
+    <p>Додайте або виберіть користувача</p>
+
+    <div class="user-select">
+      <label style="font-weight:600;">Обрати існуючого:</label>
+      <select id="userSelect" onchange="selectUserFromDropdown(this.value)"></select>
+    </div>
+
+    <hr style="margin:16px 0;border-color:#eef1f5;">
+
+    <p><strong>Новий користувач</strong> (заповніть поля)</p>
     <input id="userName" placeholder="ПІБ (прізвище ім'я по батькові)" value="">
     <input id="userInn" placeholder="РНОКПП (ІНН)" value="">
     <input id="userBirth" placeholder="Дата народження (ДД.ММ.РРРР)" value="">
@@ -97,134 +227,128 @@
     <div class="photo-upload">
       <label>📸 Паспортне фото (для ID-картки)</label>
       <input type="file" id="photoPassport" accept="image/*">
-      <label>📸 Фото РНОКПП</label>
-      <input type="file" id="photoInn" accept="image/*">
-      <label>📸 Фото закордонного паспорта</label>
-      <input type="file" id="photoForeign" accept="image/*">
     </div>
     <button onclick="saveUser()">Зберегти</button>
-    <button class="btn-secondary" onclick="cancelSettings()">Скасувати</button>
-  </div>
-
-  <!-- Header -->
-  <div class="header">
-    <h1>Дія</h1>
-    <div class="header-right">
-      <span id="headerUser">Гість</span>
-      <span class="settings-btn" onclick="showSettings()">⚙️</span>
-    </div>
-  </div>
-
-  <!-- Users -->
-  <div class="profile-selector" id="userSelector"></div>
-
-  <!-- User Card -->
-  <div class="user-card">
-    <div class="name" id="displayName">Немає даних</div>
-    <div class="inn" id="displayInn">Додайте користувача через ⚙️</div>
-    <div class="badge">⏳ Не верифіковано</div>
-  </div>
-
-  <!-- Tabs -->
-  <div class="tabs" id="tabs">
-    <div class="tab active" data-tab="documents"><span class="tab-icon">📄</span>Документи</div>
-    <div class="tab" data-tab="services"><span class="tab-icon">🛠️</span>Послуги</div>
-    <div class="tab" data-tab="payments"><span class="tab-icon">💳</span>Платежі</div>
-    <div class="tab" data-tab="messages"><span class="tab-icon">💬</span>Повідомлення</div>
-  </div>
-
-  <!-- Documents -->
-  <div class="content active" id="tab-documents">
-    <div id="documentsContainer"></div>
-  </div>
-
-  <!-- Fake tabs -->
-  <div class="content" id="tab-services">
-    <div class="placeholder-tab"><span class="big-icon">🛠️</span><h3>Послуги</h3><p>Скоро будуть доступні</p></div>
-  </div>
-  <div class="content" id="tab-payments">
-    <div class="placeholder-tab"><span class="big-icon">💳</span><h3>Платежі</h3><p>Скоро будуть доступні</p></div>
-  </div>
-  <div class="content" id="tab-messages">
-    <div class="placeholder-tab"><span class="big-icon">💬</span><h3>Повідомлення</h3><p>Немає нових повідомлень</p></div>
+    <button class="btn-secondary" onclick="closeSettings()">Закрити</button>
   </div>
 
 </div>
 
 <script>
+  // ===== DATA =====
   let users = JSON.parse(localStorage.getItem('diya_users')) || {};
-  let currentUser = localStorage.getItem('diya_current') || null;
+  let currentUserKey = localStorage.getItem('diya_current') || null;
 
-  function saveUsers() { localStorage.setItem('diya_users', JSON.stringify(users)); }
-
-  function renderUserSelector() {
-    const container = document.getElementById('userSelector');
-    let html = '';
-    const keys = Object.keys(users);
-    if (keys.length === 0) {
-      html = '<span style="color:#6c7a8a;font-size:14px;">Немає користувачів. Додайте через ⚙️</span>';
-    } else {
-      keys.forEach(key => {
-        const active = key === currentUser ? 'active' : '';
-        html += `<button class="profile-chip ${active}" onclick="selectUser('${key}')">${users[key].name || key}</button>`;
-      });
-      html += `<button class="profile-chip add" onclick="showSettings()">+ Додати</button>`;
-    }
-    container.innerHTML = html;
+  // ===== HELPERS =====
+  function saveUsers() {
+    localStorage.setItem('diya_users', JSON.stringify(users));
   }
 
-  function selectUser(key) {
-    currentUser = key;
-    localStorage.setItem('diya_current', key);
-    renderUserSelector();
-    renderDocuments();
+  function getUserData() {
+    if (currentUserKey && users[currentUserKey]) return users[currentUserKey];
+    return null;
+  }
+
+  function getUserName() {
+    const data = getUserData();
+    return data ? data.name : 'Гість';
+  }
+
+  function getShortName() {
+    const name = getUserName();
+    if (name === 'Гість') return 'Гість';
+    const parts = name.split(' ');
+    return parts.length >= 2 ? parts[0] + ' ' + parts[1] : name;
+  }
+
+  // ===== RENDER =====
+  function renderAll() {
+    renderUserSelect();
     updateHeader();
+    renderDocuments();
+    updateAIChat();
+    updateFeedGreeting();
   }
 
   function updateHeader() {
-    if (currentUser && users[currentUser]) {
-      const short = users[currentUser].name.split(' ').slice(0,2).join(' ') || currentUser;
-      document.getElementById('headerUser').textContent = short;
-      document.getElementById('displayName').textContent = users[currentUser].name;
-      document.getElementById('displayInn').textContent = 'РНОКПП: ' + (users[currentUser].inn || '—');
-      document.querySelector('.user-card .badge').textContent = '✅ Верифіковано';
+    const name = getUserName();
+    document.getElementById('userNameHeader').textContent = name === 'Гість' ? 'Гість' : getShortName();
+  }
+
+  function updateFeedGreeting() {
+    const name = getUserName();
+    document.getElementById('userNameGreeting').textContent = name === 'Гість' ? 'Гість' : getShortName();
+  }
+
+  function updateAIChat() {
+    const name = getUserName();
+    document.getElementById('aiUserName').textContent = name === 'Гість' ? 'Гість' : getShortName();
+  }
+
+  function renderUserSelect() {
+    const select = document.getElementById('userSelect');
+    select.innerHTML = '';
+    const keys = Object.keys(users);
+    if (keys.length === 0) {
+      const opt = document.createElement('option');
+      opt.value = '';
+      opt.textContent = '— немає користувачів —';
+      select.appendChild(opt);
     } else {
-      document.getElementById('headerUser').textContent = 'Гість';
-      document.getElementById('displayName').textContent = 'Немає даних';
-      document.getElementById('displayInn').textContent = 'Додайте користувача через ⚙️';
-      document.querySelector('.user-card .badge').textContent = '⏳ Не верифіковано';
+      keys.forEach(key => {
+        const opt = document.createElement('option');
+        opt.value = key;
+        opt.textContent = users[key].name || key;
+        if (key === currentUserKey) opt.selected = true;
+        select.appendChild(opt);
+      });
+    }
+    // add empty option for new user?
+  }
+
+  function selectUserFromDropdown(key) {
+    if (key && users[key]) {
+      currentUserKey = key;
+      localStorage.setItem('diya_current', key);
+      renderAll();
     }
   }
 
   function renderDocuments() {
     const container = document.getElementById('documentsContainer');
-    if (!currentUser || !users[currentUser]) {
-      container.innerHTML = `<div style="text-align:center;padding:40px 0;color:#6c7a8a;">Оберіть або додайте користувача</div>`;
+    const data = getUserData();
+    if (!data) {
+      container.innerHTML = `<div style="text-align:center;padding:40px 0;color:#6c7a8a;">Додайте користувача через налаштування</div>`;
       return;
     }
-    const d = users[currentUser];
     const today = new Date().toLocaleDateString('uk-UA');
-    const photoPass = d.photoPassport ? `<img src="${d.photoPassport}" class="doc-photo" alt="Фото">` : `<div class="doc-photo" style="display:flex;align-items:center;justify-content:center;color:#aaa;font-size:12px;">Немає фото</div>`;
+    const photo = data.photoPassport ? `<img src="${data.photoPassport}" class="doc-photo" alt="Фото">` :
+      `<div class="doc-photo" style="display:flex;align-items:center;justify-content:center;color:#aaa;font-size:12px;background:#f8fafc;">Немає фото</div>`;
+
+    const nameParts = data.name ? data.name.split(' ') : ['—', '—', '—'];
+    const surname = nameParts[0] || '—';
+    const name = nameParts[1] || '—';
+    const patronymic = nameParts[2] || '—';
 
     container.innerHTML = `
       <!-- Паспорт -->
       <div class="doc-card">
         <div class="doc-header">
-          <div class="doc-icon passport">🪪</div>
+          <div class="doc-icon">🪪</div>
           <div><div class="doc-title">Паспорт громадянина України</div><div class="doc-sub">ID-картка</div></div>
         </div>
         <div class="doc-body">
-          ${photoPass}
+          ${photo}
           <div class="doc-info">
-            <div class="doc-label">Номер документа</div>
-            <div class="doc-number">${d.passport || '—'}</div>
+            <div class="doc-label">Номер</div>
+            <div class="doc-number">${data.passport || '—'}</div>
             <div class="doc-row">
-              <div class="field"><div class="label">Прізвище</div><div class="value">${d.name.split(' ')[0] || '—'}</div></div>
-              <div class="field"><div class="label">Ім'я</div><div class="value">${d.name.split(' ')[1] || '—'}</div></div>
-              <div class="field"><div class="label">По батькові</div><div class="value">${d.name.split(' ')[2] || '—'}</div></div>
+              <div class="field"><div class="label">Прізвище</div><div class="value">${surname}</div></div>
+              <div class="field"><div class="label">Ім'я</div><div class="value">${name}</div></div>
+              <div class="field"><div class="label">По батькові</div><div class="value">${patronymic}</div></div>
             </div>
             <div class="doc-row">
-              <div class="field"><div class="label">Дата народження</div><div class="value">${d.birth || '—'}</div></div>
+              <div class="field"><div class="label">Дата народження</div><div class="value">${data.birth || '—'}</div></div>
               <div class="field"><div class="label">Стать</div><div class="value">Ч</div></div>
             </div>
           </div>
@@ -238,15 +362,15 @@
       <!-- РНОКПП -->
       <div class="doc-card inn-card">
         <div class="doc-header">
-          <div class="doc-icon inn">📇</div>
+          <div class="doc-icon">📇</div>
           <div><div class="doc-title">Картка платника податків</div><div class="doc-sub">РНОКПП</div></div>
         </div>
         <div class="doc-body">
           <div class="doc-info">
-            <div class="inn-number">${d.inn || '—'}</div>
+            <div class="inn-number">${data.inn || '—'}</div>
             <div class="doc-row">
-              <div class="field"><div class="label">ПІБ</div><div class="value">${d.name || '—'}</div></div>
-              <div class="field"><div class="label">Дата народження</div><div class="value">${d.birth || '—'}</div></div>
+              <div class="field"><div class="label">ПІБ</div><div class="value">${data.name || '—'}</div></div>
+              <div class="field"><div class="label">Дата народження</div><div class="value">${data.birth || '—'}</div></div>
             </div>
           </div>
         </div>
@@ -256,19 +380,19 @@
         </div>
       </div>
 
-      <!-- Закордонний -->
-      <div class="doc-card foreign-card">
+      <!-- eДокумент (закордонний) -->
+      <div class="doc-card">
         <div class="doc-header">
-          <div class="doc-icon foreign">🌍</div>
-          <div><div class="doc-title">Закордонний паспорт</div><div class="doc-sub">е-Документ</div></div>
+          <div class="doc-icon">🌍</div>
+          <div><div class="doc-title">Закордонний паспорт</div><div class="doc-sub">e-Документ</div></div>
         </div>
         <div class="doc-body">
           <div class="doc-info">
-            <div class="doc-label">Номер документа</div>
-            <div class="doc-number">${d.foreign || '—'}</div>
+            <div class="doc-label">Номер</div>
+            <div class="doc-number">${data.foreign || '—'}</div>
             <div class="doc-row">
-              <div class="field"><div class="label">ПІБ</div><div class="value">${d.name || '—'}</div></div>
-              <div class="field"><div class="label">Дата народження</div><div class="value">${d.birth || '—'}</div></div>
+              <div class="field"><div class="label">ПІБ</div><div class="value">${data.name || '—'}</div></div>
+              <div class="field"><div class="label">Дата народження</div><div class="value">${data.birth || '—'}</div></div>
             </div>
           </div>
         </div>
@@ -280,6 +404,23 @@
     `;
   }
 
+  // ===== SETTINGS =====
+  function openSettings() {
+    document.getElementById('settingsOverlay').classList.add('active');
+    renderUserSelect();
+    // Clear form fields
+    document.getElementById('userName').value = '';
+    document.getElementById('userInn').value = '';
+    document.getElementById('userBirth').value = '';
+    document.getElementById('userPassport').value = '';
+    document.getElementById('userForeign').value = '';
+    document.getElementById('photoPassport').value = '';
+  }
+
+  function closeSettings() {
+    document.getElementById('settingsOverlay').classList.remove('active');
+  }
+
   function saveUser() {
     const name = document.getElementById('userName').value.trim() || 'Користувач без імені';
     const inn = document.getElementById('userInn').value.trim() || '—';
@@ -287,28 +428,30 @@
     const passport = document.getElementById('userPassport').value.trim() || '—';
     const foreign = document.getElementById('userForeign').value.trim() || '—';
     const key = name + '_' + (inn.slice(-4) || Date.now());
-    
-    const getPhoto = (id) => {
-      const file = document.getElementById(id).files[0];
-      return file ? URL.createObjectURL(file) : '';
-    };
-    
-    users[key] = { name, inn, birth, passport, foreign, photoPassport: getPhoto('photoPassport'), photoInn: getPhoto('photoInn'), photoForeign: getPhoto('photoForeign') };
+
+    const file = document.getElementById('photoPassport').files[0];
+    const photoData = file ? URL.createObjectURL(file) : '';
+
+    users[key] = { name, inn, birth, passport, foreign, photoPassport: photoData };
     saveUsers();
-    currentUser = key;
+    currentUserKey = key;
     localStorage.setItem('diya_current', key);
-    document.getElementById('settingsScreen').classList.add('hidden');
-    renderUserSelector();
-    renderDocuments();
-    updateHeader();
+    closeSettings();
+    renderAll();
   }
 
-  function cancelSettings() { document.getElementById('settingsScreen').classList.add('hidden'); }
-  function showSettings() { document.getElementById('settingsScreen').classList.remove('hidden'); }
+  function logout() {
+    if (confirm('Вийти з поточного профілю?')) {
+      currentUserKey = null;
+      localStorage.removeItem('diya_current');
+      renderAll();
+    }
+  }
 
-  document.querySelectorAll('.tab').forEach(tab => {
+  // ===== TABS =====
+  document.querySelectorAll('.tab-item').forEach(tab => {
     tab.addEventListener('click', function() {
-      document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+      document.querySelectorAll('.tab-item').forEach(t => t.classList.remove('active'));
       this.classList.add('active');
       const target = this.dataset.tab;
       document.querySelectorAll('.content').forEach(c => c.classList.remove('active'));
@@ -316,14 +459,10 @@
     });
   });
 
-  function init() {
-    renderUserSelector();
-    const keys = Object.keys(users);
-    if (keys.length > 0 && !currentUser) { currentUser = keys[0]; localStorage.setItem('diya_current', currentUser); }
-    if (currentUser && users[currentUser]) { updateHeader(); renderDocuments(); }
-    else { updateHeader(); }
-  }
-  init();
+  // ===== INIT =====
+  // Если нет пользователей, создаём демо-пользователя (для наглядности, но поля пустые)
+  // Но по заданию поля пустые, поэтому не создаём. Показываем гостя.
+  renderAll();
 </script>
 </body>
 </html>
