@@ -15,13 +15,14 @@
       display: flex; 
       justify-content: center; 
       min-height: 100vh;
+      margin: 0;
     }
 
     #app { 
       max-width: 430px; 
       width: 100%; 
       min-height: 100vh; 
-      background: linear-gradient(145deg, #0a1a3a, #1a3d7c, #2a5fa8, #1a3d7c);
+      background: linear-gradient(145deg, #0a1a3a, #1a3d7c, #2a5fa8, #1a3d7c, #0a1a3a);
       background-size: 400% 400%;
       animation: gradientShift 8s ease infinite;
       position: relative; 
@@ -103,9 +104,9 @@
     .documents-scroll::-webkit-scrollbar { display: none; }
 
     .doc-card { 
-      min-width: 75%; 
-      max-width: 85%;
-      height: 80%;
+      min-width: 80%; 
+      max-width: 88%;
+      height: 82%;
       scroll-snap-align: center; 
       border-radius: 24px; 
       padding: 16px; 
@@ -131,30 +132,61 @@
       flex-direction: column;
     }
 
-    .doc-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 8px; }
-    .doc-header .doc-title { font-size: 13px; font-weight: 600; color: rgba(255,255,255,0.9); letter-spacing: 0.3px; }
+    .doc-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 6px; }
+    .doc-header .doc-title { font-size: 14px; font-weight: 600; color: rgba(255,255,255,0.9); letter-spacing: 0.3px; }
     .doc-header .doc-badge { font-size: 9px; opacity: 0.5; text-transform: uppercase; background: rgba(255,255,255,0.1); padding: 2px 10px; border-radius: 12px; color: rgba(255,255,255,0.7); }
 
-    .doc-body { display: flex; gap: 12px; align-items: flex-start; flex: 1; }
-    .doc-body .doc-photo { width: 60px; height: 78px; border-radius: 8px; object-fit: cover; border: 2px solid rgba(255,255,255,0.15); background: rgba(255,255,255,0.05); flex-shrink: 0; }
-    .doc-body .doc-info { flex: 1; display: flex; flex-direction: column; gap: 2px; }
-    .doc-body .doc-info .doc-row { display: flex; justify-content: space-between; align-items: baseline; flex-wrap: wrap; }
-    .doc-body .doc-info .doc-row .label { font-size: 8px; opacity: 0.4; text-transform: uppercase; letter-spacing: 0.3px; color: rgba(255,255,255,0.6); }
-    .doc-body .doc-info .doc-row .value { font-size: 14px; font-weight: 600; color: white; }
-    .doc-body .doc-info .doc-row .value.number { font-size: 16px; letter-spacing: 1px; }
+    .doc-body { display: flex; gap: 14px; align-items: flex-start; flex: 1; }
+    .doc-body .doc-photo { 
+      width: 85px; 
+      height: 110px; 
+      border-radius: 10px; 
+      object-fit: cover; 
+      border: 2px solid rgba(255,255,255,0.15); 
+      background: rgba(255,255,255,0.05); 
+      flex-shrink: 0; 
+    }
+    .doc-body .doc-info { flex: 1; display: flex; flex-direction: column; gap: 4px; }
+    .doc-body .doc-info .doc-row { display: flex; flex-direction: column; margin-bottom: 2px; }
+    .doc-body .doc-info .doc-row .label { font-size: 9px; opacity: 0.4; text-transform: uppercase; letter-spacing: 0.5px; color: rgba(255,255,255,0.6); }
+    .doc-body .doc-info .doc-row .value { font-size: 15px; font-weight: 600; color: white; }
+    .doc-body .doc-info .doc-row .value.number { font-size: 17px; letter-spacing: 1px; }
 
-    .doc-update { background: #2e7d32; border-radius: 20px; padding: 3px 12px; display: inline-block; font-size: 10px; font-weight: 500; color: white; letter-spacing: 0.3px; margin: 8px 0 4px; align-self: flex-start; }
+    .doc-update { background: #2e7d32; border-radius: 20px; padding: 3px 14px; display: inline-block; font-size: 10px; font-weight: 500; color: white; letter-spacing: 0.3px; margin: 8px 0 4px; align-self: flex-start; }
 
-    .doc-name { font-size: 15px; font-weight: 700; color: white; margin-top: 2px; }
+    .doc-name { font-size: 16px; font-weight: 700; color: white; margin-top: 2px; }
 
     .doc-card.inn-card .doc-body .doc-photo { display: none; }
     .doc-card.inn-card .doc-body .doc-info { margin-left: 0; }
-    .doc-card.inn-card .inn-number { font-size: 28px; font-weight: 700; letter-spacing: 4px; text-align: center; margin: 6px 0; color: white; }
+    .doc-card.inn-card .inn-number { font-size: 30px; font-weight: 700; letter-spacing: 4px; text-align: center; margin: 6px 0; color: white; }
 
-    /* Підпис на паспорті */
-    .doc-signature { margin-top: 6px; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 6px; }
-    .doc-signature .sig-label { font-size: 8px; opacity: 0.4; text-transform: uppercase; color: rgba(255,255,255,0.6); }
-    .doc-signature .sig-value { font-size: 14px; font-weight: 400; color: rgba(255,255,255,0.7); font-family: 'Brush Script MT', cursive; }
+    /* Підпис на паспорті — фікс */
+    .doc-signature { 
+      margin-top: 4px; 
+      border-top: 1px solid rgba(255,255,255,0.08); 
+      padding-top: 4px; 
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .doc-signature .sig-label { font-size: 9px; opacity: 0.4; text-transform: uppercase; color: rgba(255,255,255,0.6); }
+    .doc-signature .sig-value { 
+      font-size: 14px; 
+      font-weight: 400; 
+      color: rgba(255,255,255,0.7); 
+      font-family: 'Brush Script MT', cursive;
+      max-width: 150px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+    .doc-signature .sig-image { 
+      height: 30px; 
+      max-width: 80px; 
+      object-fit: contain; 
+      opacity: 0.8;
+      border-radius: 4px;
+    }
 
     /* ===== ІНШІ ВКЛАДКИ ===== */
     .ai-chat, .services-grid, .menu-list { background: rgba(255,255,255,0.06); backdrop-filter: blur(10px); border-radius: 16px; padding: 20px; border: 1px solid rgba(255,255,255,0.05); }
@@ -195,11 +227,10 @@
     /* Поле для підпису */
     .signature-area { margin: 12px 0; }
     .signature-area label { font-weight: 600; color: white; display: block; margin-bottom: 6px; font-size: 14px; }
-    .signature-area canvas { width: 100%; height: 80px; border-radius: 12px; border: 1px solid rgba(255,255,255,0.1); background: rgba(255,255,255,0.05); touch-action: none; }
+    .signature-area canvas { width: 100%; height: 90px; border-radius: 12px; border: 1px solid rgba(255,255,255,0.1); background: rgba(255,255,255,0.05); touch-action: none; }
     .signature-area .sig-actions { display: flex; gap: 8px; margin-top: 6px; }
     .signature-area .sig-actions button { padding: 6px 16px; font-size: 12px; border-radius: 8px; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); color: white; cursor: pointer; width: auto; margin-top: 0; }
 
-    /* Стрічка — кольори тексту */
     .service-item .label, .service-item .desc, .cashback .label, .cashback .amount { color: white; }
     .cashback .label { color: rgba(255,255,255,0.6); }
   </style>
@@ -344,72 +375,96 @@
     canvas.height = rect.height * 2;
     ctx.scale(2, 2);
     ctx.strokeStyle = 'white';
-    ctx.lineWidth = 2;
+    ctx.lineWidth = 2.5;
     ctx.lineCap = 'round';
     ctx.lineJoin = 'round';
 
-    canvas.addEventListener('touchstart', (e) => {
+    // Видаляємо старі слухачі, щоб не дублювати
+    const newCanvas = canvas.cloneNode(true);
+    canvas.parentNode.replaceChild(newCanvas, canvas);
+    const newCtx = newCanvas.getContext('2d');
+    newCanvas.width = rect.width * 2;
+    newCanvas.height = rect.height * 2;
+    newCtx.scale(2, 2);
+    newCtx.strokeStyle = 'white';
+    newCtx.lineWidth = 2.5;
+    newCtx.lineCap = 'round';
+    newCtx.lineJoin = 'round';
+
+    // Якщо є збережений підпис — відображаємо
+    if (signatureData) {
+      const img = new Image();
+      img.onload = () => {
+        newCtx.drawImage(img, 0, 0, newCanvas.width, newCanvas.height);
+      };
+      img.src = signatureData;
+    }
+
+    newCanvas.addEventListener('touchstart', (e) => {
       e.preventDefault();
       const touch = e.touches[0];
-      const rect2 = canvas.getBoundingClientRect();
+      const rect2 = newCanvas.getBoundingClientRect();
       isDrawing = true;
       lastX = touch.clientX - rect2.left;
       lastY = touch.clientY - rect2.top;
     }, { passive: false });
 
-    canvas.addEventListener('touchmove', (e) => {
+    newCanvas.addEventListener('touchmove', (e) => {
       e.preventDefault();
       if (!isDrawing) return;
       const touch = e.touches[0];
-      const rect2 = canvas.getBoundingClientRect();
+      const rect2 = newCanvas.getBoundingClientRect();
       const x = touch.clientX - rect2.left;
       const y = touch.clientY - rect2.top;
-      ctx.beginPath();
-      ctx.moveTo(lastX, lastY);
-      ctx.lineTo(x, y);
-      ctx.stroke();
+      newCtx.beginPath();
+      newCtx.moveTo(lastX, lastY);
+      newCtx.lineTo(x, y);
+      newCtx.stroke();
       lastX = x;
       lastY = y;
     }, { passive: false });
 
-    canvas.addEventListener('touchend', (e) => {
+    newCanvas.addEventListener('touchend', (e) => {
       e.preventDefault();
       isDrawing = false;
-      signatureData = canvas.toDataURL('image/png');
+      signatureData = newCanvas.toDataURL('image/png');
     }, { passive: false });
 
-    canvas.addEventListener('mousedown', (e) => {
-      const rect2 = canvas.getBoundingClientRect();
+    newCanvas.addEventListener('mousedown', (e) => {
+      const rect2 = newCanvas.getBoundingClientRect();
       isDrawing = true;
       lastX = e.clientX - rect2.left;
       lastY = e.clientY - rect2.top;
     });
 
-    canvas.addEventListener('mousemove', (e) => {
+    newCanvas.addEventListener('mousemove', (e) => {
       if (!isDrawing) return;
-      const rect2 = canvas.getBoundingClientRect();
+      const rect2 = newCanvas.getBoundingClientRect();
       const x = e.clientX - rect2.left;
       const y = e.clientY - rect2.top;
-      ctx.beginPath();
-      ctx.moveTo(lastX, lastY);
-      ctx.lineTo(x, y);
-      ctx.stroke();
+      newCtx.beginPath();
+      newCtx.moveTo(lastX, lastY);
+      newCtx.lineTo(x, y);
+      newCtx.stroke();
       lastX = x;
       lastY = y;
     });
 
-    canvas.addEventListener('mouseup', () => {
+    newCanvas.addEventListener('mouseup', () => {
       isDrawing = false;
-      signatureData = canvas.toDataURL('image/png');
+      signatureData = newCanvas.toDataURL('image/png');
     });
+
+    document.getElementById('sigCanvas').replaceWith(newCanvas);
   }
 
   function clearSignature() {
-    const canvas = document.getElementById('sigCanvas');
-    if (!canvas) return;
-    const ctx = canvas.getContext('2d');
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
     signatureData = null;
+    const canvas = document.getElementById('sigCanvas');
+    if (canvas) {
+      const ctx = canvas.getContext('2d');
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+    }
   }
 
   // ===== DATA =====
@@ -505,8 +560,15 @@
     users[currentUserKey] = data;
     saveUsers();
 
-    const signatureHtml = data.signature ? 
-      `<div class="doc-signature"><div class="sig-label">Підпис</div><div class="sig-value">${data.signature}</div></div>` : '';
+    // Підпис — якщо є картинка, показуємо її, інакше текст
+    let signatureHtml = '';
+    if (data.signature) {
+      if (data.signature.startsWith('data:image')) {
+        signatureHtml = `<div class="doc-signature"><span class="sig-label">Підпис</span><img src="${data.signature}" class="sig-image" alt="Підпис"></div>`;
+      } else {
+        signatureHtml = `<div class="doc-signature"><span class="sig-label">Підпис</span><span class="sig-value">${data.signature}</span></div>`;
+      }
+    }
 
     container.innerHTML = `
       <!-- Паспорт -->
@@ -597,7 +659,7 @@
     document.getElementById('loginForeignNum').value = '';
     document.getElementById('userPhoto').value = '';
     clearSignature();
-    setTimeout(initSignature, 100);
+    setTimeout(initSignature, 200);
   }
 
   function closeSettings() {
